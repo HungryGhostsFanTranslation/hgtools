@@ -17,7 +17,7 @@ def iso_is_valid(path_to_iso: str) -> bool:
     """
     with open(path_to_iso, "rb") as f:
         digest = hashlib.file_digest(f, "sha256")
-    return digest.hexdigest() == extract_iso.CORRECT_SHA256
+    return digest.hexdigest() == CORRECT_SHA256
 
 
 @click.command()
