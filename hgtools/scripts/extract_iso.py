@@ -1,3 +1,4 @@
+""" Extracts the Hungry Ghosts ISO """
 import collections
 import hashlib
 import os

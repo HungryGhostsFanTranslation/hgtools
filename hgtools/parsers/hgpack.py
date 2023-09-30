@@ -15,9 +15,12 @@ class Hgpack(KaitaiStruct):
         self._read()
 
     def _read(self):
+        self._raw_directories = []
         self.directories = []
-        for i in range(272):
-            self.directories.append(Hgpack.Directory(self._io, self, self._root))
+        for i in range(271):
+            self._raw_directories.append(self._io.read_bytes(2048))
+            _io__raw_directories = KaitaiStream(BytesIO(self._raw_directories[i]))
+            self.directories.append(Hgpack.Directory(_io__raw_directories, self, self._root))
 
 
     class Directory(KaitaiStruct):
@@ -28,23 +31,15 @@ class Hgpack(KaitaiStruct):
             self._read()
 
         def _read(self):
-            self.directory_id = self._io.read_u4le()
+            self.id = self._io.read_u4le()
             self.num_files = self._io.read_u4le()
-            self.first_flk5_reverse_offset = self._io.read_u4le()
+            self.first_flk5_reverse_index = self._io.read_u4le()
             self.first_file_ofs = self._io.read_u4le()
             self.first_flk5_ofs = self._io.read_u4le()
             self.total_flk5_size = self._io.read_u4le()
-
-        @property
-        def num_flk5s(self):
-            if hasattr(self, '_m_num_flk5s'):
-                return self._m_num_flk5s
-
-            _pos = self._io.pos()
-            self._io.seek(32)
-            self._m_num_flk5s = self._io.read_u4le()
-            self._io.seek(_pos)
-            return getattr(self, '_m_num_flk5s', None)
+            self.unknown_a = self._io.read_u4le()
+            self.unknown_b = self._io.read_u4le()
+            self.num_flk5s = self._io.read_u4le()
 
         @property
         def files(self):

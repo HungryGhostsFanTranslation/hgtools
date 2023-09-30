@@ -7,7 +7,8 @@ setup(
     py_modules=['hgtools'],
     install_requires=[
         'Click',
-        'kaitaistruct'
+        'kaitaistruct',
+        'pyyaml'
     ],
     entry_points={
         'console_scripts': [
