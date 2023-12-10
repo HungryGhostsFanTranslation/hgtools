@@ -1,44 +1,8 @@
 """ Extracts pack.dat """
 import os
 import shutil
-from hgtools.parsers.hgpack import Hgpack
-from hgtools.parsers.flk5 import Flk5
+from hglib.pack import HGPack
 import click
-import yaml
-
-"""
-      - id: first_flk5_reverse_offset 
-        type: u4
-      - id: first_file_ofs
-        type: u4
-      - id: first_flk5_ofs
-        type: u4
-      - id: total_flk5_size
-        type: u4
-      # These are properly an offset/file count for another file type.
-      - id: unknown_a
-        type: u4
-      - id: unknown_b
-        type: u4
-      - id: num_flk5s
-        type: u4
-    instances:
-"""
-
-
-def write_metadata(directory: Hgpack.Directory, current_dir: str):
-    body = {
-        "id": directory.id,
-        "num_files": directory.num_files,
-        "first_flk5_reverse_index": directory.first_flk5_reverse_index,
-        "first_file_ofs": directory.first_file_ofs,
-        "total_flk5_size": directory.total_flk5_size,
-        "unknown_a": directory.unknown_a,
-        "unknown_b": directory.unknown_b,
-        "num_flk5s": directory.num_flk5s,
-    }
-    with open(os.path.join(current_dir, "meta.yml"), "w") as f:
-        yaml.dump(body, f)
 
 
 @click.command()
@@ -84,24 +48,7 @@ def unpack(path_to_pack_dat: str, output_dir: str, force: bool):
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
 
-    pack = Hgpack.from_file(path_to_pack_dat)
-    for directory in pack.directories:
-        id = directory.id
-        current_dir = os.path.join(output_dir, str(id))
-        os.makedirs(current_dir)
+    with open(path_to_pack_dat, "rb") as pack_f:
+        pack = HGPack.from_packed(pack_f)
 
-        write_metadata(directory, current_dir)
-
-        for i,file in enumerate(directory.files):
-            magic = file.data[0:4]
-            if magic == b"FLK5":
-                flk5 = Flk5.from_bytes(file.data)
-                flk5_dir = os.path.join(current_dir, f"{i}.{flk5.unknown}") # Add the unknown var to the directory so I can restore it 
-                os.makedirs(flk5_dir)
-                for j, flk5_file in enumerate(flk5.files):
-                    filename = f"{j}.{flk5_file.file_type}"
-                    with open(os.path.join(flk5_dir, filename), "wb") as f:
-                        f.write(flk5_file.data)
-            else:
-                with open(os.path.join(current_dir, f"{i}.{file.unknown}.bin"), "wb") as f:
-                    f.write(file.data)
+    pack.to_dir(output_dir)

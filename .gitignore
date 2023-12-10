@@ -1,3 +1,5 @@
 __pycache__/
 build/
 *.pyc
+hgtools.egg-info
+.DS_Store
