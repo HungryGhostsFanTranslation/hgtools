@@ -3,6 +3,7 @@ from hgtools.scripts.extract_iso import extract_iso
 from hgtools.scripts.unpack import unpack
 from hgtools.scripts.pack import pack
 
+
 @click.group()
 def cli():
     pass

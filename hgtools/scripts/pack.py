@@ -3,6 +3,7 @@ import os
 from hglib.pack import HGPack
 import click
 
+
 @click.command()
 @click.argument(
     "input_dir",
@@ -23,7 +24,7 @@ import click
 )
 def pack(input_dir: str, path_to_pack_dat: str, force: bool):
     """
-    Given an input dir, repacks all FLK5 files and then packs everything into a 
+    Given an input dir, repacks all FLK5 files and then packs everything into a
     pack.dat file.
     """
     if os.path.isfile(path_to_pack_dat) and not force:
@@ -34,7 +35,6 @@ def pack(input_dir: str, path_to_pack_dat: str, force: bool):
             print("Exiting")
             return
 
-    pack = HGPack.from_dir(input)
+    pack = HGPack.from_dir(input_dir)
 
     pack.to_packed(path_to_pack_dat)
-    
