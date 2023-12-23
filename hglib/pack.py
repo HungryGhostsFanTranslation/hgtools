@@ -295,6 +295,8 @@ class HGPackDir:
         path_contents = os.listdir(path)
         if "meta.yml" in path_contents:
             path_contents.remove("meta.yml")
+        if ".DS_Store" in path_contents:
+            path_contents.remove(".DS_Store")
         path_contents = sorted(path_contents, key=lambda fn: int(fn.split(".")[0]))
 
         files_or_dirs = []
@@ -396,6 +398,8 @@ class HGPack:
             sys.exit(f"Failed to build HGPack from dir. {path} does not exist")
 
         path_contents = os.listdir(path)
+        if ".DS_Store" in path_contents:
+            path_contents.remove(".DS_Store")
         if len(path_contents) != 273:
             sys.exit(
                 f"Found an incorrect number of dirs in {path}. No support for adding/removing dirs"
