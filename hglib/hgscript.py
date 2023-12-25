@@ -14,10 +14,11 @@ from base64 import b64encode, b64decode
 
 
 class EventType(Enum):
+    unknown_0 = 0
     text = 1
     newline = 2
     change_color = 3
-    unknown_4 = 4
+    placeholder = 4
     screen_wipe = 5
     sleep = 6
     play_sound = 7
