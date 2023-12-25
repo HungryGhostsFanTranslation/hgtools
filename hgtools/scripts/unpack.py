@@ -25,6 +25,7 @@ import click
 )
 def unpack(path_to_pack_dat: str, output_dir: str, force: bool):
     """
+    Pack a pack.dat file.
     Unpacks all files from the pack.dat pack file. Additionally unpacks any of the
     files which are FLK5 files.
     """
@@ -48,7 +49,9 @@ def unpack(path_to_pack_dat: str, output_dir: str, force: bool):
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
 
+    print("Unpacking pack.dat...")
     with open(path_to_pack_dat, "rb") as pack_f:
         pack = HGPack.from_packed(pack_f)
 
     pack.to_dir(output_dir)
+    print("Unpacking complete.")

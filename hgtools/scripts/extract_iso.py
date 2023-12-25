@@ -41,6 +41,7 @@ def iso_is_valid(path_to_iso: str) -> bool:
 @click.option("quick", "-q", is_flag=True, default=False, help="Skip ISO hash check")
 def extract_iso(path_to_iso: str, output_dir: str, force: bool, quick: bool):
     """
+    Dump a Hungry Ghosts ISO.
     Extracts PATH_TO_ISO and places contents in OUTPUT_DIR. If OUTPUT_DIR doesn't exist
     it will be created.
     """

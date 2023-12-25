@@ -24,6 +24,7 @@ import click
 )
 def pack(input_dir: str, path_to_pack_dat: str, force: bool):
     """
+    Unpack a pack.dat file.
     Given an input dir, repacks all FLK5 files and then packs everything into a
     pack.dat file.
     """
@@ -34,7 +35,8 @@ def pack(input_dir: str, path_to_pack_dat: str, force: bool):
         if response.lower() != "y":
             print("Exiting")
             return
-
+    print("Packing pack.dat...")
     pack = HGPack.from_dir(input_dir)
 
     pack.to_packed(path_to_pack_dat)
+    print("Packing complete")

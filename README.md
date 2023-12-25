@@ -13,3 +13,7 @@ hgtools extract-iso ./hungry_ghosts.iso ./extracted/
 hgtools unpack ./extracted/data/pack.dat ./unpacked/
 
 hgtools pack ./unpacked/ ./extracted/data/pack.dat
+
+hgtools decompile-hgscript ./unpacked/ ./hgscript/jp/
+
+hgtools compile-hgscript ./hgscript/jp/ ./unpacked/
