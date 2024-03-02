@@ -17,3 +17,7 @@ hgtools pack ./unpacked/ ./extracted/data/pack.dat
 hgtools decompile-hgscript ./unpacked/ ./hgscript/jp/
 
 hgtools compile-hgscript ./hgscript/jp/ ./unpacked/
+
+hgtools dump-graphics ./unpacked ./graphics_out
+
+hgtools patch-graphics ./graphics_replacements unpacked
