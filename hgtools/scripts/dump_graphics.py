@@ -1,4 +1,5 @@
 """ Extracts pack.dat """
+
 import os
 import shutil
 from hglib.textures.known_textures import known_textures
@@ -46,7 +47,6 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
             os.unlink(file_path)
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
-
 
     for file_path in known_textures.keys():
         full_path = os.path.join(path_to_unpacked, file_path)

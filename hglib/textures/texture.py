@@ -14,7 +14,7 @@ class Texture:
     def __init__(self, filename: str, slices: dict):
         self.filename = filename
 
-        # A single texture is usually comprised of multiple smaller textures, each 
+        # A single texture is usually comprised of multiple smaller textures, each
         # with its own palette. I call these "slices"
         self.slices = slices
         self.bpp = None
@@ -47,7 +47,9 @@ class Texture:
             item_y = real_y - pos_y
             if not "pixels" in slice:
                 if whole_sheet:
-                    slice["pixels"] = [[0 for _ in range(self.width)] for _ in range(self.height)]
+                    slice["pixels"] = [
+                        [0 for _ in range(self.width)] for _ in range(self.height)
+                    ]
                 else:
                     slice["pixels"] = [[0 for _ in range(width)] for _ in range(height)]
             slice["pixels"][item_y][item_x] = pixel_value
@@ -55,7 +57,7 @@ class Texture:
 
     @staticmethod
     def read_palette_8bpp(fp, offset):
-        """ Read a single 8bpp palette from <fp> starting at <offset> """
+        """Read a single 8bpp palette from <fp> starting at <offset>"""
         palette = [0] * 256
         for section_index in range(0, 8):
             fp.seek(offset + (0x800 * section_index))
@@ -96,7 +98,7 @@ class Texture:
 
     @staticmethod
     def read_palette_4bpp(fp, offset):
-        """ Read a single 4bpp palette from <fp> starting at <offset> """
+        """Read a single 4bpp palette from <fp> starting at <offset>"""
         fp.seek(offset)
         palette = [0] * 16
         for i in range(0, 8):
@@ -120,7 +122,7 @@ class Texture:
 
     @staticmethod
     def write_palette_8bpp(fp, offset, palette):
-        """ Replace the 8bpp palette at <offset> with <palette> """
+        """Replace the 8bpp palette at <offset> with <palette>"""
         fp.seek(offset)
         # Pad palette out to 256 entries if needed.
         palette += [(0, 0, 0, 0)] * (256 - len(palette))
@@ -159,7 +161,7 @@ class Texture:
 
     @staticmethod
     def write_palette_4bpp(fp, offset, palette):
-        """ Replace the 4bpp palette at <offset> with <palette> """
+        """Replace the 4bpp palette at <offset> with <palette>"""
         fp.seek(offset)
         # Pad palette out to 16 entries if needed.
         palette += [(0, 0, 0, 0)] * (16 - len(palette))
@@ -181,7 +183,7 @@ class Texture:
             fp.write(a.to_bytes(length=1, byteorder="little"))
 
     def is_palette(self, offset, palette_start):
-        """ 
+        """
         Returns if the given offset is part of the palette at <palette_start>.
         Used to avoid overwriting palette data when patching pixel data.
         """
@@ -203,13 +205,17 @@ class Texture:
             if "palette" in slice:
                 continue
             if self.bpp == 8:
-                self.slices[slice_name]["palette"] = self.read_palette_8bpp(fp, slice["palette_offset"])
+                self.slices[slice_name]["palette"] = self.read_palette_8bpp(
+                    fp, slice["palette_offset"]
+                )
             elif self.bpp == 4:
-                self.slices[slice_name]["palette"] = self.read_palette_4bpp(fp, slice["palette_offset"])
+                self.slices[slice_name]["palette"] = self.read_palette_4bpp(
+                    fp, slice["palette_offset"]
+                )
 
     def read(self):
         """
-        Read the binary texture file at <filename> and store various things in 
+        Read the binary texture file at <filename> and store various things in
         instance variables.
         1. Detects if image is 4bpp or 8bpp
         2. Reads total width/height
@@ -296,7 +302,7 @@ class Texture:
         return np.array(tile_pixels)
 
     def unscramble(self, pixel_data, scramble_pattern):
-        """ 
+        """
         Some textures are a scrambled mess of 16x32 tiles. This function will
         unscramble them using the patterns defined in unscramble_patterns.py
         """
@@ -321,11 +327,8 @@ class Texture:
         """
         pixel_data.reverse()
         tile_width = int(scrambled_width / 32)
-        tile_height = int(scrambled_height/16)
-        temp_tile_pixels = [
-            [0 for _ in range(tile_width)]
-            for _ in range(tile_height)
-        ]
+        tile_height = int(scrambled_height / 16)
+        temp_tile_pixels = [[0 for _ in range(tile_width)] for _ in range(tile_height)]
         for y, row in enumerate(scramble_pattern):
             for x, tile_coords in enumerate(row):
                 tile = self.get_tile(pixel_data, x, y)
@@ -333,7 +336,7 @@ class Texture:
 
         tile_pixels = np.block(temp_tile_pixels)
         tile_pixels = tile_pixels.tolist()
-        
+
         return tile_pixels
 
     @staticmethod
@@ -365,9 +368,9 @@ class Texture:
         png_palette = info.get("palette")
 
         inferred_palette = self.infer_palette(png_filename)
-        if self.bpp == 4 and len(inferred_palette)>16:
+        if self.bpp == 4 and len(inferred_palette) > 16:
             sys.exit("Palette for %s is too big" % png_filename)
-        
+
         f = open(self.filename, "r+b")
         if self.bpp == 8:
             self.write_palette_8bpp(
@@ -377,7 +380,7 @@ class Texture:
             for y, row in enumerate(rows):
                 for x in range(0, width):
 
-                    # Translate a pixel from our replacement PNG to a value 
+                    # Translate a pixel from our replacement PNG to a value
                     # in <inferred_palette>.
                     if png_palette:
                         pixel = png_palette[row[x]]
@@ -412,7 +415,7 @@ class Texture:
             pixel_data = [[0 for _ in range(width)] for _ in range(height)]
             for y, row in enumerate(rows):
                 for x in range(0, width):
-                    # Translate a pixel from our replacement PNG to a value 
+                    # Translate a pixel from our replacement PNG to a value
                     # in <inferred_palette>.
                     if png_palette:
                         pixel = png_palette[row[x]]
@@ -430,7 +433,7 @@ class Texture:
 
                     if pixel not in inferred_palette:
                         sys.exit("Found pixel not in palette: %s" % str(pixel))
-                    
+
                     pixel_value = inferred_palette.index(pixel)
 
                     # Store the value in pixel_data
@@ -439,7 +442,10 @@ class Texture:
             # If this slice is scrambled, unscramble it before writing
             if slice["scrambled"]:
                 rescrambled = self.rescramble(
-                    pixel_data, scramble_patterns[slice_name], slice["width"], slice["height"]
+                    pixel_data,
+                    scramble_patterns[slice_name],
+                    slice["width"],
+                    slice["height"],
                 )
                 pixel_data = rescrambled
 
@@ -458,7 +464,7 @@ class Texture:
                         0x80 + swizzled_address, slice["palette_offset"]
                     ):
                         continue
-                    
+
                     pixel_value = pixel_data[y][x]
 
                     f.seek(0x80 + swizzled_address)

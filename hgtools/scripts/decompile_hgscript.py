@@ -1,10 +1,12 @@
 """ Extracts pack.dat """
+
 import os
 import sys
 import shutil
 from hglib.hgscript import HGScriptCollection
 import click
 from hgtools.scripts.hgscript_paths import hgscript_paths
+
 
 @click.command()
 @click.argument(
@@ -53,7 +55,10 @@ def decompile_hgscript(path_to_unpacked: str, output_dir: str, force: bool):
     for item in hgscript_paths:
         path = os.path.join(path_to_unpacked, item["path"])
         if not os.path.isfile(path):
-            sys.exit(f"Expected HGScriptCollection file {path} could not be found. Is {path_to_unpacked} an unpacked pack.dat?")
+            sys.exit(
+                f"Expected HGScriptCollection file {path} could not be found. Is {path_to_unpacked} an unpacked pack.dat?"
+            )
+        orig_hgscript_filesizes[path] = os.stat(path).st_size
         has_object_header = item["has_object_header"]
         coll = HGScriptCollection.from_file(path, has_object_header=has_object_header)
         output_dir_name = item["path"].replace("/", "_").replace("\\", "_")

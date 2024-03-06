@@ -24,8 +24,11 @@ def calculate_text_width(s):
     for c in s:
         width = CHAR_PIXEL_WIDTHS.get(c, None)
         if not width:
-            raise ValueError("Received character with unknown width: %s. Update char_pixel_widths.json" % c)
-        length += (width + 1)  # 1 pixel between each character
+            raise ValueError(
+                "Received character with unknown width: %s. Update char_pixel_widths.json"
+                % c
+            )
+        length += width + 1  # 1 pixel between each character
     return length
 
 
@@ -45,7 +48,12 @@ class EventSequence:
             b = fp.read(4)
             if b == b"\x00\x00\x00\x00":
                 break
-            e = Event(b, sequence=self, event_index=len(self.events), prev_event_type=prev_event_type)
+            e = Event(
+                b,
+                sequence=self,
+                event_index=len(self.events),
+                prev_event_type=prev_event_type,
+            )
             if not self.first_event_type:
                 self.first_event_type = e.type
             if e.type == 1:
@@ -56,7 +64,9 @@ class EventSequence:
     def serialize(self):
         if self.events == []:
             return None
-        return functools.reduce(lambda seq, item: seq + item, [e.serialize() for e in self.events])
+        return functools.reduce(
+            lambda seq, item: seq + item, [e.serialize() for e in self.events]
+        )
 
 
 class Event:
@@ -73,7 +83,7 @@ class Event:
     @staticmethod
     def parse_event_bytes(b):
         event = int.from_bytes(b, "little")
-        event_type = event & 0x3f
+        event_type = event & 0x3F
         data_offset = event >> 6 << 2
         return event_type, data_offset
 
@@ -83,10 +93,10 @@ class Event:
     def get_text(self, event_data):
         text_bytes = b""
         i = self.data_offset
-        self.text_width = event_data[i:i + 4]
+        self.text_width = event_data[i : i + 4]
         i += 4
         while True:
-            b = event_data[i:i + 1]
+            b = event_data[i : i + 1]
             if b == b"\x00":
                 break
             text_bytes += b
@@ -97,7 +107,7 @@ class Event:
 
 
 def unicode_chars(s):
-    """ Return list of unicode chars in s"""
+    """Return list of unicode chars in s"""
     out = ""
     for c in s:
         if not (0 <= ord(c) <= 127) and c not in out:
@@ -106,30 +116,39 @@ def unicode_chars(s):
 
 
 def dump_event(event, script):
-    body = {"source_filename": event.sequence.source_filename,
-            "sequence_id": event.sequence.id,
-            "event_id": event.event_index,
-            "original_text": event.text,
-            "translated_text": None,
-            "prev_event_type": event.prev_event_type,
-            "first_event_type": event.sequence.first_event_type}
-    script.update(source_filename=event.sequence.source_filename, sequence_id=event.sequence.id,
-                  event_index=event.event_index, body=body)
+    body = {
+        "source_filename": event.sequence.source_filename,
+        "sequence_id": event.sequence.id,
+        "event_id": event.event_index,
+        "original_text": event.text,
+        "translated_text": None,
+        "prev_event_type": event.prev_event_type,
+        "first_event_type": event.sequence.first_event_type,
+    }
+    script.update(
+        source_filename=event.sequence.source_filename,
+        sequence_id=event.sequence.id,
+        event_index=event.event_index,
+        body=body,
+    )
 
 
 def translate_event(event, event_data, script):
-    """ Given an Event and event data, translate event and
-    return an updated event_data. """
+    """Given an Event and event data, translate event and
+    return an updated event_data."""
     if event.type != 1:
         raise ValueError("Only can translate event type 1")
-    pre = event_data[0:event.data_offset]
-    post = event_data[event.data_offset + event.length:]
+    pre = event_data[0 : event.data_offset]
+    post = event_data[event.data_offset + event.length :]
 
     if event.text in DO_NOT_TRANSLATE:
         return event_data
 
-    translation = script.get(source_filename=event.sequence.source_filename, sequence_id=event.sequence.id,
-                             event_id=event.event_index)
+    translation = script.get(
+        source_filename=event.sequence.source_filename,
+        sequence_id=event.sequence.id,
+        event_id=event.event_index,
+    )
     if translation and translation.get("translated_text"):
         event.text = translation.get("translated_text")
         """
@@ -141,7 +160,9 @@ def translate_event(event, event_data, script):
     else:
         new_width = int.from_bytes(event.text_width, "little")
 
-    new_text = new_width.to_bytes(4, "little") + event.text.encode("shift-jis") + b"\x00"
+    new_text = (
+        new_width.to_bytes(4, "little") + event.text.encode("shift-jis") + b"\x00"
+    )
 
     if len(new_text) < event.length:
         new_text += b"\x00" * (event.length - len(new_text))
@@ -155,9 +176,9 @@ def translate_event(event, event_data, script):
 
 
 def fix_offsets(event_sequences, min_offset, delta):
-    """ Fix any events whose 'data_offset' occurs after 'min_offset'.
+    """Fix any events whose 'data_offset' occurs after 'min_offset'.
     Delta is how many bytes the offsets need to change
-    Could be more efficient but not necessary """
+    Could be more efficient but not necessary"""
     for event_sequence in event_sequences:
         for event in event_sequence.events:
             if event.original_data_offset > min_offset:
@@ -175,7 +196,11 @@ def process_sequences(event_sequences, event_data, script, translate=False):
                 if translate:
                     event_data = translate_event(event, event_data, script)
                     if event.length != old_length:
-                        fix_offsets(event_sequences, event.original_data_offset + old_length, event.length - old_length)
+                        fix_offsets(
+                            event_sequences,
+                            event.original_data_offset + old_length,
+                            event.length - old_length,
+                        )
                 else:
                     dump_event(event, script)
     return event_sequences, event_data

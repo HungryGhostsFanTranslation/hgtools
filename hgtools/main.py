@@ -7,6 +7,7 @@ from hgtools.scripts.compile_hgscript import compile_hgscript
 from hgtools.scripts.dump_graphics import dump_graphics
 from hgtools.scripts.patch_graphics import patch_graphics
 
+
 @click.group()
 def cli():
     pass

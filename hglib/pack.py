@@ -181,6 +181,7 @@ class HGPackFile:
         if not os.path.exists(path):
             sys.exit(f"Failed to build HGPackFile from file. {path} does not exist")
         filename = os.path.basename(path)
+
         unkn_pack_flags = int(filename.split(".")[-1])
         contents = b""
         with open(path, "rb") as f:
@@ -369,10 +370,10 @@ class HGPack:
             # There are some dirs with 0 files, yet they had a pointer here.
             # Just in case it matters, I keep track of it and write it back.
             if dir.num_files != 0:
-                first_file_ofs = data_pointers[dir_index][0]
-            else:
-                first_file_ofs = dir.first_file_ofs
-            fp.write(first_file_ofs.to_bytes(4, byteorder="little"))
+                dir.first_file_ofs = data_pointers[dir_index][0]
+                dir.unknown_b = data_pointers[dir_index][0]
+
+            fp.write(dir.first_file_ofs.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_b.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_c.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_d.to_bytes(4, byteorder="little"))
