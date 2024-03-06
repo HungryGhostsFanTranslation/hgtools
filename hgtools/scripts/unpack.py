@@ -1,4 +1,5 @@
 """ Extracts pack.dat """
+
 import os
 import shutil
 from hglib.pack import HGPack

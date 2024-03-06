@@ -1,6 +1,7 @@
 """
 Used to calculate the pixel-width of an arbitrary English string
 """
+
 {
     " ": 8,
     "!": 8,

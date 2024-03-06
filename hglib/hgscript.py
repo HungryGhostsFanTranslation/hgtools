@@ -4,6 +4,7 @@ most text in the game. It has events for newlines, coloring text, and even playi
 sounds. This module contains classes to unpack the bytecode into an XML file and then
 to build those XML files back into the binary files.
 """
+
 import functools
 import os
 import sys
@@ -11,6 +12,8 @@ from enum import Enum
 from typing import BinaryIO
 from defusedxml.ElementTree import parse
 from base64 import b64encode, b64decode
+
+from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
 
 
 class EventType(Enum):
@@ -197,6 +200,9 @@ class HGScript:
         events = []
         for event in root:
             if event.tag in ("text", "play_sound", "unknown_tag"):
+                # Word-alignment
+                if len(extra_data) % 4 != 0:
+                    extra_data += b"\x00" * (4 - (len(extra_data) % 4))
                 data_ptr = len(extra_data)
 
                 event_data = data_ptr >> 2
@@ -214,10 +220,6 @@ class HGScript:
                 elif event.tag == "unknown_tag":
                     unknown_tag_data = int(event.text).to_bytes(8, "little")
                     extra_data += unknown_tag_data
-
-                # Word-alignment
-                if len(extra_data) % 4 != 0:
-                    extra_data += b"\x00" * (4 - (len(extra_data) % 4))
 
             else:
                 if event.attrib:
@@ -301,8 +303,16 @@ class HGScriptCollection:
 
         # Final file is padded out to 0x10?
         # I think this is actually only needed when the dialog file is NOT in a flk5
-        if fp.tell() % 16 != 0:
-            fp.write(b"\x00" * (16 - (fp.tell() % 16)))
+        # This hacky check is an attempt to check for if this is inside a FLK5
+        if path.count("/") != 2:
+            if fp.tell() % 16 != 0:
+                fp.write(b"\x00" * (16 - (fp.tell() % 16)))
+
+        # Magic padding voodoo magic
+        orig_filesize = orig_hgscript_filesizes[path]
+        current_size = fp.tell()
+        if current_size < orig_filesize:
+            fp.write(b"\x00" * (orig_filesize - current_size))
 
         # Now finish up by writing the pointers skipped earlier
         fp.seek(extra_data_ptr_location)
