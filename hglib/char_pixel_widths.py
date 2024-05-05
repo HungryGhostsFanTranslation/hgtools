@@ -2,7 +2,7 @@
 Used to calculate the pixel-width of an arbitrary English string
 """
 
-{
+char_pixel_widths = {
     " ": 8,
     "!": 8,
     '"': 8,

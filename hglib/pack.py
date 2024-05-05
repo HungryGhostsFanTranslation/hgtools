@@ -200,6 +200,8 @@ class HGPackDir:
         unknown_e: int,
         unknown_f: int,
         files_or_dirs: list[HGPackFile | FLK5Archive] = None,
+        first_file_ofs_corresponding_item: int | None = None,
+        unknown_b_corresponding_item: int | None = None,
     ):
         if not files_or_dirs:
             self.files_or_dirs = []
@@ -235,6 +237,9 @@ class HGPackDir:
         self.unknown_e = unknown_e
         self.unknown_f = unknown_f
 
+        self.first_file_ofs_corresponding_item = first_file_ofs_corresponding_item
+        self.unknown_b_corresponding_item = unknown_b_corresponding_item
+
         # In most situations this will be automatically be generated when this
         # is serialized. However HGPackDirs with 0 items still have it set.
         # There's a chance I can just set to whatever, but just in case I
@@ -256,6 +261,8 @@ class HGPackDir:
             "unknown_d": self.unknown_d,
             "unknown_e": self.unknown_e,
             "unknown_f": self.unknown_f,
+            "first_file_ofs_corresponding_item": self.first_file_ofs_corresponding_item,
+            "unknown_b_corresponding_item": self.unknown_b_corresponding_item
         }
 
         with open(meta_path, "w") as fp:
@@ -317,6 +324,8 @@ class HGPackDir:
             unknown_d=metadata["unknown_d"],
             unknown_e=metadata["unknown_e"],
             unknown_f=metadata["unknown_f"],
+            first_file_ofs_corresponding_item=metadata["first_file_ofs_corresponding_item"],
+            unknown_b_corresponding_item=metadata["unknown_b_corresponding_item"]
         )
 
 
@@ -339,7 +348,6 @@ class HGPack:
         # Data section first
         data_start = len(self.directories) * 0x800
         fp.seek(data_start)
-
         # Indexed by HGPackDir, then item in that dir
         data_pointers = [[] for i in range(len(self.directories))]
         data_lens = [[] for i in range(len(self.directories))]
@@ -367,11 +375,15 @@ class HGPack:
             fp.write(dir_index.to_bytes(4, byteorder="little"))
             fp.write(dir.num_files.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_a.to_bytes(4, byteorder="little"))
-            # There are some dirs with 0 files, yet they had a pointer here.
-            # Just in case it matters, I keep track of it and write it back.
-            if dir.num_files != 0:
-                dir.first_file_ofs = data_pointers[dir_index][0]
-                dir.unknown_b = data_pointers[dir_index][0]
+
+            # If these two items were pointers to known locations, adjust them
+            # as needed.
+            if dir.first_file_ofs_corresponding_item is not None:
+                index = dir.first_file_ofs_corresponding_item
+                dir.first_file_ofs = data_pointers[dir_index][index]
+            if dir.unknown_b_corresponding_item is not None:
+                index = dir.unknown_b_corresponding_item
+                dir.unknown_b = data_pointers[dir_index][index]
 
             fp.write(dir.first_file_ofs.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_b.to_bytes(4, byteorder="little"))
@@ -437,13 +449,27 @@ class HGPack:
             unknown_e = int.from_bytes(fp.read(0x04), byteorder="little")
             unknown_f = int.from_bytes(fp.read(0x04), byteorder="little")
 
+            # These two values are important, but I've been unable to figure out
+            # exactly how they work. My solution for now is to keep track of which
+            # file/dir they point to in meta.yml and then change them to the new
+            # pointer for that file/dir when it's time to write back to pack.dat.
+            first_file_ofs_corresponding_item = None
+            unknown_b_corresponding_item = None
+
             # The rest is just padding.
             fp.seek(0x1C, 1)
 
             item_info = []
             # Next is a list of files/subdirs, their size and an unknown property.
-            for _ in range(num_items):
+            for item_index in range(num_items):
                 item_ptr = int.from_bytes(fp.read(0x04), byteorder="little")
+
+                # See line 450 for explanation of this
+                if not first_file_ofs_corresponding_item and item_ptr == first_file_ofs:
+                    first_file_ofs_corresponding_item = item_index
+                if not unknown_b_corresponding_item and item_ptr == unknown_b:
+                    unknown_b_corresponding_item = item_index
+
                 item_size = int.from_bytes(fp.read(0x04), byteorder="little")
                 unkn_pack_flags = int.from_bytes(fp.read(0x04), byteorder="little")
                 fp.seek(0x4, 1)  # Word alignment
@@ -474,6 +500,8 @@ class HGPack:
                     unknown_d=unknown_d,
                     unknown_e=unknown_e,
                     unknown_f=unknown_f,
+                    first_file_ofs_corresponding_item=first_file_ofs_corresponding_item,
+                    unknown_b_corresponding_item=unknown_b_corresponding_item
                 )
             )
         return cls(directories=dirs)
