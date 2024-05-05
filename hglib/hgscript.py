@@ -14,7 +14,24 @@ from defusedxml.ElementTree import parse
 from base64 import b64encode, b64decode
 
 from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
+from hglib.char_pixel_widths import char_pixel_widths
 
+def calculate_text_width(s):
+    """
+    Given a text string, calculate the number of pixels it
+    will take up in-game
+    """
+    length = 2
+    # Each character is padded with one pixel on each side
+    for c in s:
+        width = char_pixel_widths.get(c, None)
+        if not width:
+            raise ValueError(
+                "Received character with unknown width: %s. Update char_pixel_widths.json"
+                % c
+            )
+        length += width + 1  # 1 pixel between each character
+    return length
 
 class EventType(Enum):
     unknown_0 = 0
