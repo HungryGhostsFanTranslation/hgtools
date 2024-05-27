@@ -10,7 +10,8 @@ setup(
         "kaitaistruct",
         'pyyaml',
         'defusedxml',
-        'pypng'
+        'pypng',
+        'pycdlib'
     ],
     entry_points={
         'console_scripts': [
