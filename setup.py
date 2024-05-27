@@ -11,7 +11,8 @@ setup(
         'pyyaml',
         'defusedxml',
         'pypng',
-        'pycdlib'
+        'pycdlib',
+        'numpy'
     ],
     entry_points={
         'console_scripts': [
