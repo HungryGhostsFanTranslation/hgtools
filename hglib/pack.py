@@ -381,9 +381,19 @@ class HGPack:
             if dir.first_file_ofs_corresponding_item is not None:
                 index = dir.first_file_ofs_corresponding_item
                 dir.first_file_ofs = data_pointers[dir_index][index]
+
+
+            # I'm pretty sure unknown_c is the size of all of the files+dirs AFTER
+            # the file unknown_b points to. This bit calculates that.
             if dir.unknown_b_corresponding_item is not None:
                 index = dir.unknown_b_corresponding_item
                 dir.unknown_b = data_pointers[dir_index][index]
+                
+                size = 0
+                for item_index, item in enumerate(dir.files_or_dirs):
+                    if item_index >= index:
+                        size += item.size
+                dir.unknown_c = size + (0x100 - (size % 0x100))
 
             fp.write(dir.first_file_ofs.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_b.to_bytes(4, byteorder="little"))

@@ -7,6 +7,7 @@ to build those XML files back into the binary files.
 
 import functools
 import os
+import re
 import sys
 from enum import Enum
 from typing import BinaryIO
@@ -15,6 +16,25 @@ from base64 import b64encode, b64decode
 
 from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
 from hglib.char_pixel_widths import char_pixel_widths
+
+ranges = [
+  {"from": ord(u"\u3300"), "to": ord(u"\u33ff")},         # compatibility ideographs
+  {"from": ord(u"\ufe30"), "to": ord(u"\ufe4f")},         # compatibility ideographs
+  {"from": ord(u"\uf900"), "to": ord(u"\ufaff")},         # compatibility ideographs
+  {"from": ord(u"\U0002F800"), "to": ord(u"\U0002fa1f")}, # compatibility ideographs
+  {'from': ord(u'\u3040'), 'to': ord(u'\u309f')},         # Japanese Hiragana
+  {"from": ord(u"\u30a0"), "to": ord(u"\u30ff")},         # Japanese Katakana
+  {"from": ord(u"\u2e80"), "to": ord(u"\u2eff")},         # cjk radicals supplement
+  {"from": ord(u"\u4e00"), "to": ord(u"\u9fff")},
+  {"from": ord(u"\u3400"), "to": ord(u"\u4dbf")},
+  {"from": ord(u"\U00020000"), "to": ord(u"\U0002a6df")},
+  {"from": ord(u"\U0002a700"), "to": ord(u"\U0002b73f")},
+  {"from": ord(u"\U0002b740"), "to": ord(u"\U0002b81f")},
+  {"from": ord(u"\U0002b820"), "to": ord(u"\U0002ceaf")}  # included as of Unicode 8.0
+]
+
+def is_cjk(c):
+    return any([range["from"] <= ord(c) <= range["to"] for range in ranges])
 
 def calculate_text_width(s):
     """
@@ -25,6 +45,9 @@ def calculate_text_width(s):
     # Each character is padded with one pixel on each side
     for c in s:
         width = char_pixel_widths.get(c, None)
+        # For JP characters, just assume with 24
+        if is_cjk(c):
+            width = 24
         if not width:
             raise ValueError(
                 "Received character with unknown width: %s. Update char_pixel_widths.json"
@@ -225,10 +248,16 @@ class HGScript:
                 event_data = data_ptr >> 2
 
                 if event.tag == "text":
-                    width = int(event.attrib["width"])
+                    encoded_text = event.text.encode("shift-jis")
+                    
+                    if re.match(r'.*[a-zA-Z].*', event.text):
+                        width = calculate_text_width(event.text)
+                    else:
+                        width = int(event.attrib["width"])
+
                     extra_data += (
                         width.to_bytes(4, "little")
-                        + event.text.encode("shift-jis")
+                        + encoded_text
                         + b"\x00"
                     )
                 elif event.tag == "play_sound":
