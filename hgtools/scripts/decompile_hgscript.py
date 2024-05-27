@@ -58,7 +58,7 @@ def decompile_hgscript(path_to_unpacked: str, output_dir: str, force: bool):
             sys.exit(
                 f"Expected HGScriptCollection file {path} could not be found. Is {path_to_unpacked} an unpacked pack.dat?"
             )
-        orig_hgscript_filesizes[path] = os.stat(path).st_size
+
         has_object_header = item["has_object_header"]
         coll = HGScriptCollection.from_file(path, has_object_header=has_object_header)
         output_dir_name = item["path"].replace("/", "_").replace("\\", "_")
