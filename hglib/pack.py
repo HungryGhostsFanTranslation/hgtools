@@ -379,21 +379,26 @@ class HGPack:
             # If these two items were pointers to known locations, adjust them
             # as needed.
             if dir.first_file_ofs_corresponding_item is not None:
-                index = dir.first_file_ofs_corresponding_item
-                dir.first_file_ofs = data_pointers[dir_index][index]
+                dir_i, file_i = dir.first_file_ofs_corresponding_item.split("/")
+                dir_i = int(dir_i)
+                file_i = int(file_i)
+                dir.first_file_ofs = data_pointers[dir_i][file_i]
 
-
-            # I'm pretty sure unknown_c is the size of all of the files+dirs AFTER
-            # the file unknown_b points to. This bit calculates that.
             if dir.unknown_b_corresponding_item is not None:
-                index = dir.unknown_b_corresponding_item
-                dir.unknown_b = data_pointers[dir_index][index]
-                
-                size = 0
-                for item_index, item in enumerate(dir.files_or_dirs):
-                    if item_index >= index:
-                        size += item.size
-                dir.unknown_c = size + (0x100 - (size % 0x100))
+                dir_i, file_i = dir.unknown_b_corresponding_item.split("/")
+                dir_i = int(dir_i)
+                file_i = int(file_i)
+                dir.unknown_b = data_pointers[dir_i][file_i]
+
+                # I'm pretty sure unknown_c is the size of all of the files+dirs AFTER
+                # the file unknown_b points to. This bit calculates that.
+                # If unknown_b points outside this dir though don't bother
+                if dir_i == dir_index:
+                    size = 0
+                    for item_index, item in enumerate(dir.files_or_dirs):
+                        if item_index >= file_i:
+                            size += item.size
+                    dir.unknown_c = size + (0x100 - (size % 0x100)) + 0x100
 
             fp.write(dir.first_file_ofs.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_b.to_bytes(4, byteorder="little"))
@@ -440,7 +445,9 @@ class HGPack:
     def from_packed(cls, fp: BinaryIO):
         # Read in directory headers first
         dirs = []
+        orig_ptrs_by_dir = []
         for dir_index in range(273):
+            orig_ptrs = []
             fp.seek(dir_index * 0x800)
             # This should just equal dir_index
             dir_index_packed = int.from_bytes(fp.read(0x04), byteorder="little")
@@ -471,14 +478,8 @@ class HGPack:
 
             item_info = []
             # Next is a list of files/subdirs, their size and an unknown property.
-            for item_index in range(num_items):
+            for _item_index in range(num_items):
                 item_ptr = int.from_bytes(fp.read(0x04), byteorder="little")
-
-                # See line 450 for explanation of this
-                if not first_file_ofs_corresponding_item and item_ptr == first_file_ofs:
-                    first_file_ofs_corresponding_item = item_index
-                if not unknown_b_corresponding_item and item_ptr == unknown_b:
-                    unknown_b_corresponding_item = item_index
 
                 item_size = int.from_bytes(fp.read(0x04), byteorder="little")
                 unkn_pack_flags = int.from_bytes(fp.read(0x04), byteorder="little")
@@ -488,6 +489,7 @@ class HGPack:
             files_or_dirs = []
             # Now process the data section
             for item_ptr, item_size, unkn_pack_flags in item_info:
+                orig_ptrs.append(item_ptr)
                 fp.seek(item_ptr)
                 contents = fp.read(item_size)
                 if contents[0:4] == b"FLK5":
@@ -510,8 +512,24 @@ class HGPack:
                     unknown_d=unknown_d,
                     unknown_e=unknown_e,
                     unknown_f=unknown_f,
-                    first_file_ofs_corresponding_item=first_file_ofs_corresponding_item,
-                    unknown_b_corresponding_item=unknown_b_corresponding_item
+                    first_file_ofs_corresponding_item=None,
+                    unknown_b_corresponding_item=None
                 )
             )
+            orig_ptrs_by_dir.append(orig_ptrs)
+
+        # Since unknown_b and first_file_ofs can point to files OUTSIDE of their own
+        # HGPackDir, I have to do this hack where I figure out what their new value is
+        # at the very end.
+        for dir in dirs:
+            first_file_ofs = dir.first_file_ofs
+            unknown_b = dir.unknown_b
+
+            for dir_index, dir_ptrs in enumerate(orig_ptrs_by_dir):
+                for file_index, ptr in enumerate(dir_ptrs):
+                    if ptr == first_file_ofs:
+                        dir.first_file_ofs_corresponding_item = f"{dir_index}/{file_index}"
+                    if ptr == unknown_b:
+                        dir.unknown_b_corresponding_item = f"{dir_index}/{file_index}"
+            
         return cls(directories=dirs)
