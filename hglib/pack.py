@@ -395,7 +395,7 @@ class HGPack:
                 # If unknown_b points outside this dir though don't bother
                 if dir_i == dir_index:
                     unknown_c_size = (data_pointers[dir_i][-1] + dir.files_or_dirs[-1].size - dir.unknown_b)
-                    dir.unknown_c = unknown_c_size  + (0x80 - (unknown_c_size % 80)) + 0x80
+                    dir.unknown_c = unknown_c_size  + (0x80 - (unknown_c_size % 0x80)) + 0x80
 
             fp.write(dir.first_file_ofs.to_bytes(4, byteorder="little"))
             fp.write(dir.unknown_b.to_bytes(4, byteorder="little"))
