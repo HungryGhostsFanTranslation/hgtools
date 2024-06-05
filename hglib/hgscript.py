@@ -11,7 +11,7 @@ import re
 import sys
 from enum import Enum
 from typing import BinaryIO
-from defusedxml.ElementTree import parse
+from defusedxml.ElementTree import parse, ParseError
 from base64 import b64encode, b64decode
 
 from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
@@ -235,7 +235,11 @@ class HGScript:
         """
         if not os.path.exists(path):
             sys.exit(f"Failed to build HGScript from file. {path} does not exist")
-        tree = parse(path)
+        try:
+            tree = parse(path)
+        except ParseError:
+            sys.exit(f"Failed to parse XML file at {path}.")
+
         root = tree.getroot()
         events = []
         for event in root:
