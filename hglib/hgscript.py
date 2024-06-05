@@ -67,7 +67,7 @@ class EventType(Enum):
     play_sound = 7
     unknown_11 = 11
     unknown_tag = 12
-    unknown_14 = 14
+    button = 14
 
 
 class InvalidHGScriptException(Exception):
