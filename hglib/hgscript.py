@@ -253,7 +253,7 @@ class HGScript:
 
                 if event.tag == "text":
                     # Em dashes suck
-                    event.text = event.text.replace("—", "―")
+                    event.text = event.text.replace("—", "―").replace("–", "―")
                     encoded_text = event.text.encode("shift-jis")
                     
                     if re.match(r'.*[a-zA-Z].*', event.text):
