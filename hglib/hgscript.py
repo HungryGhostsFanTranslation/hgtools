@@ -36,6 +36,9 @@ ranges = [
 def is_cjk(c):
     return any([range["from"] <= ord(c) <= range["to"] for range in ranges])
 
+def s_is_cjk(s):
+    return any([is_cjk(c) for c in s])
+
 def calculate_text_width(s):
     """
     Given a text string, calculate the number of pixels it
@@ -256,7 +259,7 @@ class HGScript:
                     event.text = event.text.replace("—", "―").replace("–", "―")
                     encoded_text = event.text.encode("shift-jis")
                     
-                    if re.match(r'.*[a-zA-Z].*', event.text):
+                    if not s_is_cjk(event.text):
                         width = calculate_text_width(event.text)
                     else:
                         width = int(event.attrib["width"])
