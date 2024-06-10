@@ -261,8 +261,10 @@ class HGScript:
                     
                     if not s_is_cjk(event.text):
                         width = calculate_text_width(event.text)
-                    else:
+                    elif "width" in event.attrib:
                         width = int(event.attrib["width"])
+                    else:
+                        width = len(event.text) * 24
 
                     extra_data += (
                         width.to_bytes(4, "little")
