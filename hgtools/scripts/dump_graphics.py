@@ -3,7 +3,9 @@
 import os
 import shutil
 from hglib.textures.known_textures import known_textures
+from hglib.fonts.known_fonts import known_fonts
 from hglib.textures.texture import Texture
+from hglib.fonts.font import Font
 import click
 
 
@@ -52,3 +54,14 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
         full_path = os.path.join(path_to_unpacked, file_path)
         t = Texture(filename=full_path, slices=known_textures[file_path])
         t.dump_slices(output_dir)
+
+    for file_path in known_fonts.keys():
+        full_path = os.path.join(path_to_unpacked, file_path)
+
+        title = known_fonts[file_path]["title"]
+        width = known_fonts[file_path]["width"]
+        height = known_fonts[file_path]["height"]
+        interleaved = known_fonts[file_path]["interleaved"]
+        font = Font(filename=full_path, title=title, width=width, height=height, interleaved=interleaved)
+
+        font.dump(output_dir)

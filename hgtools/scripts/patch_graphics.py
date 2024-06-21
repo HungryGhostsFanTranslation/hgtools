@@ -6,7 +6,10 @@ import shutil
 import subprocess
 import tempfile
 from hglib.textures.known_textures import known_textures
+from hglib.fonts.known_fonts import known_fonts
 from hglib.textures.texture import Texture
+from hglib.fonts.font import Font
+from pathlib import Path
 import click
 
 
@@ -32,7 +35,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
             "pngquant not found. This is a requirement for this script. Install it first"
         )
 
-    if not shutil.which("convert"):
+    if not shutil.which("magick"):
         sys.exit(
             "ImageMagick not found. This is a requirement for this script. Install it first"
         )
@@ -57,7 +60,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     ]
                 )
                 shutil.copy(temp_path, out_path)
-            else:
+            elif "font" not in filename:
                 subprocess.run(
                     [
                         "pngquant",
@@ -70,8 +73,12 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     ]
                 )
                 subprocess.run(
-                    ["convert", "-flop", "-rotate", "180", temp_path, out_path]
+                    ["magick", "-flop", "-rotate", "180", temp_path, out_path]
                 )
+            else:
+                shutil.copyfile(in_path, out_path)
+                Path(temp_path).touch()
+
 
             os.remove(temp_path)
         for file_path in known_textures.keys():
@@ -85,3 +92,15 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     continue
                 print("Patching slice %s" % slice_name)
                 t.patch_slice(slice_name, png_path, slice["pos_x"], slice["pos_y"])
+
+        for file_path in known_fonts.keys():
+            full_path = os.path.join(path_to_unpacked, file_path)
+
+            title = known_fonts[file_path]["title"]
+            width = known_fonts[file_path]["width"]
+            height = known_fonts[file_path]["height"]
+            interleaved = known_fonts[file_path]["interleaved"]
+
+            png_path = os.path.join(tmpdir, f"{title}.png")
+            font = Font(filename=full_path, title=title, width=width, height=height, interleaved=interleaved)
+            font.patch(png_path)
