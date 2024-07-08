@@ -73,7 +73,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     ]
                 )
                 subprocess.run(
-                    ["magick", "-flop", "-rotate", "180", temp_path, out_path]
+                    ["magick", temp_path, "-flop", "-rotate", "180", out_path]
                 )
             else:
                 shutil.copyfile(in_path, out_path)
