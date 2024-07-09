@@ -24,6 +24,7 @@ def compile_hgscript(input_dir: str, path_to_unpacked: str):
     appropriate binary file in <path_to_pack_dat>.
     """
 
+    print("Compiling hgscript")
     for dir in os.listdir(input_dir):
         """
         if int(dir.split("_")[0]) != 1:
@@ -36,3 +37,4 @@ def compile_hgscript(input_dir: str, path_to_unpacked: str):
             sys.exit(f"Could not find file {original_path}")
         coll = HGScriptCollection.from_dir(os.path.join(input_dir, dir))
         coll.to_file(original_path)
+    print("Done")

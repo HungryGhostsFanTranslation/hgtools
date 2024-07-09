@@ -7,57 +7,51 @@ to build those XML files back into the binary files.
 
 import functools
 import os
-import re
 import sys
+from base64 import b64decode, b64encode
 from enum import Enum
+from itertools import pairwise
 from typing import BinaryIO
-from defusedxml.ElementTree import parse, ParseError
-from base64 import b64encode, b64decode
 
-from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
+from defusedxml.ElementTree import ParseError, parse
+
 from hglib.char_pixel_widths import char_pixel_widths
+from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
 
-ranges = [
-  {"from": ord(u"\u3300"), "to": ord(u"\u33ff")},         # compatibility ideographs
-  {"from": ord(u"\ufe30"), "to": ord(u"\ufe4f")},         # compatibility ideographs
-  {"from": ord(u"\uf900"), "to": ord(u"\ufaff")},         # compatibility ideographs
-  {"from": ord(u"\U0002F800"), "to": ord(u"\U0002fa1f")}, # compatibility ideographs
-  {'from': ord(u'\u3040'), 'to': ord(u'\u309f')},         # Japanese Hiragana
-  {"from": ord(u"\u30a0"), "to": ord(u"\u30ff")},         # Japanese Katakana
-  {"from": ord(u"\u2e80"), "to": ord(u"\u2eff")},         # cjk radicals supplement
-  {"from": ord(u"\u4e00"), "to": ord(u"\u9fff")},
-  {"from": ord(u"\u3400"), "to": ord(u"\u4dbf")},
-  {"from": ord(u"\U00020000"), "to": ord(u"\U0002a6df")},
-  {"from": ord(u"\U0002a700"), "to": ord(u"\U0002b73f")},
-  {"from": ord(u"\U0002b740"), "to": ord(u"\U0002b81f")},
-  {"from": ord(u"\U0002b820"), "to": ord(u"\U0002ceaf")}  # included as of Unicode 8.0
-]
 
-def is_cjk(c):
-    return any([range["from"] <= ord(c) <= range["to"] for range in ranges])
-
-def s_is_cjk(s):
-    return any([is_cjk(c) for c in s])
+def is_ascii(c):
+    c_as_int = ord(c)
+    return c_as_int >= 0 and c_as_int <= 0x7f
 
 def calculate_text_width(s):
     """
     Given a text string, calculate the number of pixels it
-    will take up in-game
+    will take up in-game. Takes into account character width
+    as well as kerning.
     """
-    length = 2
-    # Each character is padded with one pixel on each side
-    for c in s:
-        width = char_pixel_widths.get(c, None)
-        # For JP characters, just assume with 24
-        if is_cjk(c):
-            width = 24
-        if not width:
-            raise ValueError(
-                "Received character with unknown width: %s. Update char_pixel_widths.json"
-                % c
-            )
-        length += width + 1  # 1 pixel between each character
+    length = 0
+    for c, next_c in pairwise(s):
+        length += get_pair_width(c, next_c)
+
+    # Pairwise will drop the last character, so we calculate that separately
+    # Use " " as the right char just as a means to get the kerning-less width.
+    length += get_pair_width(s[-1], " ")
+
     return length
+
+def get_pair_width(c, next_c):
+    """
+    Given a character and the character to its right, figure out it's full width
+    including any kerning.
+    """
+    if not is_ascii(c):
+        width = 24
+    else:
+        if not is_ascii(next_c):
+            width = char_pixel_widths[c][" "]
+        else:
+            width = char_pixel_widths[c][next_c]
+    return width
 
 class EventType(Enum):
     unknown_0 = 0
@@ -255,22 +249,16 @@ class HGScript:
                 event_data = data_ptr >> 2
 
                 if event.tag == "text":
-                    # Em dashes suck
-                    event.text = event.text.replace("—", "―").replace("–", "―")
+                    # Replace all ellipsis with "$" which we have patched in the font
+                    # to be an ellipsis
+                    event.text = event.text.replace("…", "$").replace("...", "$")
+                    # Similarly, we swapped "%" for emdash
+                    event.text = event.text.replace("—", "%").replace("–", "%")
                     encoded_text = event.text.encode("shift-jis")
-                    
-                    if not s_is_cjk(event.text):
-                        width = calculate_text_width(event.text)
-                    elif "width" in event.attrib:
-                        width = int(event.attrib["width"])
-                    else:
-                        width = len(event.text) * 24
 
-                    extra_data += (
-                        width.to_bytes(4, "little")
-                        + encoded_text
-                        + b"\x00"
-                    )
+                    width = calculate_text_width(event.text)
+
+                    extra_data += width.to_bytes(4, "little") + encoded_text + b"\x00"
                 elif event.tag == "play_sound":
                     sound_data = b64decode(event.text)
                     extra_data += sound_data

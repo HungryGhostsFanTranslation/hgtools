@@ -102,5 +102,6 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
             interleaved = known_fonts[file_path]["interleaved"]
 
             png_path = os.path.join(tmpdir, f"{title}.png")
+            print(f"Patching font {title}")
             font = Font(filename=full_path, title=title, width=width, height=height, interleaved=interleaved)
             font.patch(png_path)

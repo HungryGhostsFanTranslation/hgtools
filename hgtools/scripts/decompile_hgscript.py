@@ -33,6 +33,7 @@ def decompile_hgscript(path_to_unpacked: str, output_dir: str, force: bool):
     them as XML in <output_dir>
     """
 
+    print("Decompiling hgscript")
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -65,3 +66,4 @@ def decompile_hgscript(path_to_unpacked: str, output_dir: str, force: bool):
         output_path = os.path.join(output_dir, output_dir_name)
         os.makedirs(output_path)
         coll.to_dir(output_path)
+    print("Done")
