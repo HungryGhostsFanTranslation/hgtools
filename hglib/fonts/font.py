@@ -98,6 +98,7 @@ class Font:
         )
 
         filename = f"{output_dir}/{self.title}.png"
+        print(f"Dumping to {filename}")
         with open(filename, "wb") as image_f:
             w.write(image_f, tile_pixels)
     @staticmethod
@@ -129,6 +130,7 @@ class Font:
             sys.exit(f"{png_filename} has incorrect dimensions")
 
         tiles_per_row = int(self.width / 24)
+
         tiles = []
         first = True
         row_tiles = [[[0 for _ in range(24)] for _ in range(24)] for _ in range(tiles_per_row)]
@@ -139,11 +141,17 @@ class Font:
                 row_tiles = [[[0 for _ in range(24)] for _ in range(24)] for _ in range(tiles_per_row)]
 
             for tile_i in range(tiles_per_row):
-                pixels = row[tile_i*24:(tile_i+1)*24]
                 if "palette" in info:
+                    pixels = row[tile_i*24:(tile_i+1)*24]
                     pixels = [0 if x == 0 else 1 for x in pixels]
                 else:
-                    pixels = [1 if r==g==b==0 else 0 for r,g,b,a in batched(pixels, 4)]
+                    if "alpha" in info and info["alpha"] == True:
+                        pixels = row[tile_i*24*4:(tile_i+1)*24*4]
+                        pixels = [1 if r==g==b==0 else 0 for r,g,b,a in batched(pixels, 4)]
+                    else:
+                        pixels = row[tile_i*24*3:(tile_i+1)*24*3]
+                        pixels = [1 if r==g==b==0 else 0 for r,g,b in batched(pixels, 3)]
+
                     
                 row_tiles[tile_i][y%24] = pixels
 
@@ -158,7 +166,7 @@ class Font:
         for four_tiles in batched(tiles, 4):
             for y in range(24):
                 for x in range(12):
-                    # lol
+                    # This take 4 1bpp tiles and interlaces them together into one byte
                     bt = (
                         four_tiles[0][y][x * 2]
                         | four_tiles[0][y][(x * 2) + 1] << 4
@@ -219,7 +227,7 @@ class Font:
         for four_tiles in batched(tiles, 4):
             for y in range(24):
                 for x in range(12):
-                    # lol
+                    # This take 4 1bpp tiles and interlaces them together into one byte
                     bt = (
                         four_tiles[0][y][x * 2]
                         | four_tiles[0][y][(x * 2) + 1] << 4
