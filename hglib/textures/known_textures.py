@@ -220,6 +220,17 @@ known_textures = {
             "width": 128,
         },
     },
+    "118/0.147": {
+        "note_bg_1": {
+            "palette_offset": 131712,
+            "width": 512,
+            "height": 512,
+            "pos_x": 0,
+            "pos_y": 0,
+            "scrambled": False,
+            "full_sheet": True
+        }
+    },
     "108/4.130": {
         "name_entry_char_0": {
             "height": 16,

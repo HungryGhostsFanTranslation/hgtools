@@ -303,7 +303,7 @@ class Texture:
 
     def unscramble(self, pixel_data, scramble_pattern):
         """
-        Some textures are a scrambled mess of 16x32 tiles. This function will
+        Some textures are a scrambled mess of 32x16 tiles. This function will
         unscramble them using the patterns defined in unscramble_patterns.py
         """
         temp_tile_pixels = [

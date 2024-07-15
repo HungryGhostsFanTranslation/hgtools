@@ -249,6 +249,11 @@ class HGScript:
                 event_data = data_ptr >> 2
 
                 if event.tag == "text":
+                    # This characters have been "sacrificed" (see below)
+                    # As such they cannot appear in the game script
+                    if "$" in event.text or "%" in event.text:
+                        raise ValueError(f"Disallowed character found in event text: {event.text}")
+
                     # Replace all ellipsis with "$" which we have patched in the font
                     # to be an ellipsis
                     event.text = event.text.replace("…", "$").replace("...", "$")
