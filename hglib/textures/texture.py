@@ -271,7 +271,11 @@ class Texture:
             print(f"Dumping to {filename}")
             pixel_data = slice["pixels"]
             if slice["scrambled"]:
-                scramble_pattern = scramble_patterns.get(slice_name)
+                width = slice["width"]
+                height = slice["height"]
+                scramble_pattern = scramble_patterns.get(f"{width}_{height}")
+                if not scramble_pattern:
+                    raise KeyError(f"No scramble pattern defined for {width}x{height}")
                 unscrambled_pixels = self.unscramble(pixel_data, scramble_pattern)
                 pixel_data = unscrambled_pixels
 
@@ -368,6 +372,26 @@ class Texture:
         png_palette = info.get("palette")
 
         inferred_palette = self.infer_palette(png_filename)
+
+        if png_palette and len(png_palette[0]) != 4:
+            # pngquant eats the alpha channel if 100% of colors are max alpha
+            # this will add the alpha channel back
+            fixed_palette = []
+            for color in png_palette:
+                if len(color) == 3:
+                    fixed_palette.append(color + (255,))
+                else:
+                    fixed_palette.append(color)
+            png_palette = fixed_palette
+
+            fixed_inferred_palette = []
+            for color in inferred_palette:
+                if len(color) == 3:
+                    fixed_inferred_palette.append(color + (255,))
+                else:
+                    fixed_inferred_palette.append(color)
+            inferred_palette = fixed_inferred_palette
+
         if self.bpp == 4 and len(inferred_palette) > 16:
             sys.exit("Palette for %s is too big" % png_filename)
 
@@ -441,11 +465,16 @@ class Texture:
 
             # If this slice is scrambled, unscramble it before writing
             if slice["scrambled"]:
+                width = slice["width"]
+                height = slice["height"]
+                scramble_pattern = scramble_patterns.get(f"{width}_{height}")
+                if not scramble_pattern:
+                    raise KeyError(f"No scramble pattern defined for {width}x{height}")
                 rescrambled = self.rescramble(
                     pixel_data,
-                    scramble_patterns[slice_name],
-                    slice["width"],
-                    slice["height"],
+                    scramble_pattern,
+                    width,
+                    height,
                 )
                 pixel_data = rescrambled
 
