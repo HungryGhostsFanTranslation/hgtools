@@ -60,6 +60,9 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     ]
                 )
                 shutil.copy(temp_path, out_path)
+            elif "note_bg" in filename:
+                shutil.copyfile(in_path, out_path)
+                Path(temp_path).touch()
             elif "font" not in filename:
                 subprocess.run(
                     [

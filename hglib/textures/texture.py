@@ -131,14 +131,14 @@ class Texture:
             fp.seek(offset + (0x800 * section_index))
             for i in range(0, 8):
                 r, g, b, a = palette[(section_index * 32) + i]
-                a = math.floor(a / 2)
+                a = math.ceil(a / 2)
                 fp.write(r.to_bytes(length=1, byteorder="little"))
                 fp.write(g.to_bytes(length=1, byteorder="little"))
                 fp.write(b.to_bytes(length=1, byteorder="little"))
                 fp.write(a.to_bytes(length=1, byteorder="little"))
             for i in range(0, 8):
                 r, g, b, a = palette[(section_index * 32) + i + 16]
-                a = math.floor(a / 2)
+                a = math.ceil(a / 2)
                 fp.write(r.to_bytes(length=1, byteorder="little"))
                 fp.write(g.to_bytes(length=1, byteorder="little"))
                 fp.write(b.to_bytes(length=1, byteorder="little"))
@@ -146,14 +146,14 @@ class Texture:
             fp.seek(offset + (0x800 * section_index) + 0x400)
             for i in range(0, 8):
                 r, g, b, a = palette[(section_index * 32) + i + 8]
-                a = math.floor(a / 2)
+                a = math.ceil(a / 2)
                 fp.write(r.to_bytes(length=1, byteorder="little"))
                 fp.write(g.to_bytes(length=1, byteorder="little"))
                 fp.write(b.to_bytes(length=1, byteorder="little"))
                 fp.write(a.to_bytes(length=1, byteorder="little"))
             for i in range(0, 8):
                 r, g, b, a = palette[(section_index * 32) + i + 24]
-                a = math.floor(a / 2)
+                a = math.ceil(a / 2)
                 fp.write(r.to_bytes(length=1, byteorder="little"))
                 fp.write(g.to_bytes(length=1, byteorder="little"))
                 fp.write(b.to_bytes(length=1, byteorder="little"))
@@ -168,7 +168,7 @@ class Texture:
 
         for i in range(0, 8):
             r, g, b, a = palette[i]
-            a = math.floor(a / 2)
+            a = math.ceil(a / 2)
             fp.write(r.to_bytes(length=1, byteorder="little"))
             fp.write(g.to_bytes(length=1, byteorder="little"))
             fp.write(b.to_bytes(length=1, byteorder="little"))
@@ -176,7 +176,7 @@ class Texture:
         fp.seek(offset + 0x400)
         for i in range(0, 8):
             r, g, b, a = palette[i + 8]
-            a = math.floor(a / 2)
+            a = math.ceil(a / 2)
             fp.write(r.to_bytes(length=1, byteorder="little"))
             fp.write(g.to_bytes(length=1, byteorder="little"))
             fp.write(b.to_bytes(length=1, byteorder="little"))
@@ -392,6 +392,11 @@ class Texture:
                     fixed_inferred_palette.append(color)
             inferred_palette = fixed_inferred_palette
 
+        # Another palette fix
+        png_palette = [(0,0,0,0) if p==(255,255,255,0) else p for p in png_palette]
+        inferred_palette = [(0,0,0,0) if p==(255,255,255,0) else p for p in inferred_palette]
+        
+
         if self.bpp == 4 and len(inferred_palette) > 16:
             sys.exit("Palette for %s is too big" % png_filename)
 
@@ -452,6 +457,7 @@ class Texture:
                         )
                     else:
                         pixel = row[x]
+
                     if pixel == (255, 255, 255, 0):
                         pixel = (0, 0, 0, 0)
 
