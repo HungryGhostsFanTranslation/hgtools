@@ -52,6 +52,156 @@ known_textures = {
             "scrambled": True
         }
     },
+    "110/0.147": {
+        "inv_recollection_bg1": {
+            "pos_x": 0,
+            "pos_y": 0,
+            "palette_offset": 131712,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_recollection_bg2": {
+            "pos_x": 512,
+            "pos_y": 0,
+            "palette_offset": 131744,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_recollection_bg3": {
+            "pos_x": 0,
+            "pos_y": 256,
+            "palette_offset": 131776,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_recollection_bg4": {
+            "pos_x": 0,
+            "pos_y": 128,
+            "palette_offset": 131808,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_recollection_bg5": {
+            "pos_x": 512,
+            "pos_y": 128,
+            "palette_offset": 131840,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_recollection_bg6": {
+            "pos_x": 256,
+            "pos_y": 256,
+            "palette_offset": 131872,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        }
+    },
+     "111/0.147": {
+        "inv_note_bg1": {
+            "pos_x": 0,
+            "pos_y": 0,
+            "palette_offset": 131712,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_note_bg2": {
+            "pos_x": 512,
+            "pos_y": 0,
+            "palette_offset": 131744,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_note_bg3": {
+            "pos_x": 0,
+            "pos_y": 256,
+            "palette_offset": 131776,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_note_bg4": {
+            "pos_x": 0,
+            "pos_y": 128,
+            "palette_offset": 131808,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_note_bg5": {
+            "pos_x": 512,
+            "pos_y": 128,
+            "palette_offset": 131840,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_note_bg6": {
+            "pos_x": 256,
+            "pos_y": 256,
+            "palette_offset": 131872,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        }
+    },
+    "112/0.147": {
+        "inv_account_bg1": {
+            "pos_x": 0,
+            "pos_y": 0,
+            "palette_offset": 131712,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_account_bg2": {
+            "pos_x": 512,
+            "pos_y": 0,
+            "palette_offset": 131744,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_account_bg3": {
+            "pos_x": 0,
+            "pos_y": 256,
+            "palette_offset": 131776,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_account_bg4": {
+            "pos_x": 0,
+            "pos_y": 128,
+            "palette_offset": 131808,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_account_bg5": {
+            "pos_x": 512,
+            "pos_y": 128,
+            "palette_offset": 131840,
+            "width": 512,
+            "height": 128,
+            "scrambled": True
+        },
+        "inv_account_bg6": {
+            "pos_x": 256,
+            "pos_y": 256,
+            "palette_offset": 131872,
+            "width": 256,
+            "height": 128,
+            "scrambled": True
+        }
+    },
     "165/34.475/2.9": {
         "unknown": {
             "pos_x": 0,
