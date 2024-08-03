@@ -47,7 +47,16 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
             in_path = os.path.join(replacement_graphics_dir, filename)
             out_path = os.path.join(tmpdir, filename)
             temp_path = os.path.join(tmpdir, "temp.png")
-            if "name_entry" in filename:
+            if (
+                "name_entry" in filename
+                or "weapons" in filename
+                or "equipment" in filename
+                or "usable_items" in filename
+                or "notebook" in filename
+                or "notes" in filename
+                or "recollections" in filename
+                or "accounts" in filename
+            ):
                 subprocess.run(
                     [
                         "pngquant",
@@ -82,11 +91,15 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                 shutil.copyfile(in_path, out_path)
                 Path(temp_path).touch()
 
-
             os.remove(temp_path)
         for file_path in known_textures.keys():
             full_path = os.path.join(path_to_unpacked, file_path)
-            t = Texture(filename=full_path, slices=known_textures[file_path])
+            slices = known_textures[file_path]
+            # Assume the entire file is the same bpp
+            # This may bite me later
+            bpp = list(slices.values())[0]["bpp"]
+
+            t = Texture(filename=full_path, slices=slices, bpp=bpp)
 
             for slice_name, slice in known_textures[file_path].items():
 
@@ -106,5 +119,11 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
 
             png_path = os.path.join(tmpdir, f"{title}.png")
             print(f"Patching font {title}")
-            font = Font(filename=full_path, title=title, width=width, height=height, interleaved=interleaved)
+            font = Font(
+                filename=full_path,
+                title=title,
+                width=width,
+                height=height,
+                interleaved=interleaved,
+            )
             font.patch(png_path)

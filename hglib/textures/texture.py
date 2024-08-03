@@ -11,13 +11,13 @@ import sys
 
 
 class Texture:
-    def __init__(self, filename: str, slices: dict):
+    def __init__(self, filename: str, slices: dict, bpp: int):
         self.filename = filename
 
         # A single texture is usually comprised of multiple smaller textures, each
         # with its own palette. I call these "slices"
         self.slices = slices
-        self.bpp = None
+        self.bpp = bpp
         self.width = None
         self.height = None
         self.swizzle_map = None
@@ -217,21 +217,12 @@ class Texture:
         """
         Read the binary texture file at <filename> and store various things in
         instance variables.
-        1. Detects if image is 4bpp or 8bpp
-        2. Reads total width/height
-        3. Populates swizzle/deswizzle maps
-        4. Updates any defined slices
+        1. Reads total width/height
+        2. Populates swizzle/deswizzle maps
+        3. Updates any defined slices
         """
         with open(self.filename, "rb") as f:
             self.header = f.read(0x80)
-            f.seek(1)
-            flags = int.from_bytes(f.read(1), byteorder="little")
-            if (flags & 0x40) == 64:
-                self.bpp = 8
-            elif (flags & 0x40) == 0:
-                self.bpp = 4
-            else:
-                raise ValueError("Couldn't determine bpp of texture")
 
             self.read_slice_palettes(f)
 

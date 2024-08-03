@@ -4,6 +4,7 @@ default_palette_8bpp = [[0, 0, 0, 255], [0, 0, 170, 255], [0, 170, 0, 255], [0, 
 known_textures = {
     "118/0.147": {
         "note_bg1": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "palette_offset": 131712,
@@ -12,6 +13,7 @@ known_textures = {
             "scrambled": True
         },
         "note_bg2": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 0,
             "palette_offset": 131744,
@@ -20,6 +22,7 @@ known_textures = {
             "scrambled": True
         },
         "note_bg3": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 256,
             "palette_offset": 131776,
@@ -28,6 +31,7 @@ known_textures = {
             "scrambled": True
         },
         "note_bg4": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 128,
             "palette_offset": 131808,
@@ -36,6 +40,7 @@ known_textures = {
             "scrambled": True
         },
         "note_bg5": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 128,
             "palette_offset": 131840,
@@ -44,6 +49,7 @@ known_textures = {
             "scrambled": True
         },
         "note_bg6": {
+            "bpp": 4,
             "pos_x": 256,
             "pos_y": 256,
             "palette_offset": 131872,
@@ -54,6 +60,7 @@ known_textures = {
     },
     "110/0.147": {
         "inv_recollection_bg1": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "palette_offset": 131712,
@@ -62,6 +69,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_recollection_bg2": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 0,
             "palette_offset": 131744,
@@ -70,6 +78,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_recollection_bg3": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 256,
             "palette_offset": 131776,
@@ -78,6 +87,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_recollection_bg4": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 128,
             "palette_offset": 131808,
@@ -86,6 +96,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_recollection_bg5": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 128,
             "palette_offset": 131840,
@@ -94,6 +105,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_recollection_bg6": {
+            "bpp": 4,
             "pos_x": 256,
             "pos_y": 256,
             "palette_offset": 131872,
@@ -104,6 +116,7 @@ known_textures = {
     },
      "111/0.147": {
         "inv_note_bg1": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "palette_offset": 131712,
@@ -112,6 +125,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_note_bg2": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 0,
             "palette_offset": 131744,
@@ -120,6 +134,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_note_bg3": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 256,
             "palette_offset": 131776,
@@ -128,6 +143,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_note_bg4": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 128,
             "palette_offset": 131808,
@@ -136,6 +152,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_note_bg5": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 128,
             "palette_offset": 131840,
@@ -144,6 +161,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_note_bg6": {
+            "bpp": 4,
             "pos_x": 256,
             "pos_y": 256,
             "palette_offset": 131872,
@@ -154,6 +172,7 @@ known_textures = {
     },
     "112/0.147": {
         "inv_account_bg1": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "palette_offset": 131712,
@@ -162,6 +181,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_account_bg2": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 0,
             "palette_offset": 131744,
@@ -170,6 +190,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_account_bg3": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 256,
             "palette_offset": 131776,
@@ -178,6 +199,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_account_bg4": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 128,
             "palette_offset": 131808,
@@ -186,6 +208,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_account_bg5": {
+            "bpp": 4,
             "pos_x": 512,
             "pos_y": 128,
             "palette_offset": 131840,
@@ -194,6 +217,7 @@ known_textures = {
             "scrambled": True
         },
         "inv_account_bg6": {
+            "bpp": 4,
             "pos_x": 256,
             "pos_y": 256,
             "palette_offset": 131872,
@@ -204,6 +228,7 @@ known_textures = {
     },
     "165/34.475/2.9": {
         "unknown": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "whole_sheet": True,
@@ -215,6 +240,7 @@ known_textures = {
     },
     "66/11.93/7.9": {
         "unknown2": {
+            "bpp": 4,
             "pos_x": 0,
             "pos_y": 0,
             "whole_sheet": True,
@@ -226,6 +252,7 @@ known_textures = {
     },
     "84/0.57": {
         "deep_space": {
+            "bpp": 8,
             "scrambled": False,
             "palette_offset": 262784,
             "pos_x": 0,
@@ -235,10 +262,29 @@ known_textures = {
         }
     },
     "93/0.125": {
-        "accounts_0": {
+        "accounts": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 82784,
             "pos_x": 320,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "recollections": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 82816,
+            "pos_x": 384,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "notes": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 82752,
+            "pos_x": 256,
             "pos_y": 64,
             "width": 64,
             "height": 64,
@@ -246,50 +292,145 @@ known_textures = {
         
     },
     "94/0.125": {
-        "accounts_1": {
+        "accounts2": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 65952,
             "pos_x": 512,
             "pos_y": 0,
             "width": 64,
             "height": 64,
+        },
+        "recollections2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 65984,
+            "pos_x": 576,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
+        },
+        "notes2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 65920,
+            "pos_x": 320,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
         }
     },
     "95/0.125": {
-        "accounts_2": {
+        "accounts3": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 49504,
             "pos_x": 320,
             "pos_y": 64,
             "width": 64,
             "height": 64,
+        },
+        "recollections3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 49728,
+            "pos_x": 384,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "notes3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 49472,
+            "pos_x": 256,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
         }
     },
     "96/0.125": {
-        "accounts_3": {
+        "accounts4": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 17440,
             "pos_x": 512,
             "pos_y": 0,
             "width": 64,
             "height": 64,
+        },
+        "recollections4": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 17472,
+            "pos_x": 576,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
+        },
+        "notes4": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 17408,
+            "pos_x": 320,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
         }
     },
     "97/0.125": {
-        "accounts_4": {
+        "accounts5": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 50208,
             "pos_x": 320,
             "pos_y": 64,
             "width": 64,
             "height": 64,
+        },
+        "recollections5": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 50240,
+            "pos_x": 384,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "notes5": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 50176,
+            "pos_x": 256,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
         }
     },
     "98/0.125": {
-        "accounts_5": {
+        "accounts6": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 33312,
             "pos_x": 512,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
+        },
+        "recollections6": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 33344,
+            "pos_x": 576,
+            "pos_y": 0,
+            "width": 64,
+            "height": 64,
+        },
+        "notes6": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 33280,
+            "pos_x": 320,
             "pos_y": 0,
             "width": 64,
             "height": 64,
@@ -297,6 +438,7 @@ known_textures = {
     },
     "99/0.125": {
         "notebook": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 131200,
             "pos_x": 768,
@@ -305,6 +447,7 @@ known_textures = {
             "height": 64,
         },
         "weapons": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 123936,
             "pos_x": 576,
@@ -313,6 +456,7 @@ known_textures = {
             "height": 64,
         },
         "equipment": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 123968,
             "pos_x": 640,
@@ -321,23 +465,116 @@ known_textures = {
             "height": 64,
         },
         "usable_items": {
+            "bpp": 4,
             "scrambled": True,
             "palette_offset": 124000,
             "pos_x": 704,
             "pos_y": 64,
             "width": 64,
             "height": 64,
+        }
+    },
+    "88/0.125": {
+        "notebook2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 98944,
+            "pos_x": 768,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
         },
-        "menu_sheet": {
-            "scrambled": False,
-            "whole_sheet": True,
-            "palette_offset": 123968,
+        "weapons2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 98848,
+            "pos_x": 576,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "equipment2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 98880,
+            "pos_x": 640,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "usable_items2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 98912,
+            "pos_x": 704,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        }
+    },
+    "89/0.125": {
+        "notebook3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 230080,
+            "pos_x": 576,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "weapons3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 229984,
+            "pos_x": 384,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "equipment3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 230016,
+            "pos_x": 448,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        },
+        "usable_items3": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 230048,
+            "pos_x": 512,
+            "pos_y": 64,
+            "width": 64,
+            "height": 64,
+        }
+    },
+    "90/0.124/1.9": {
+        "notebook4": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 197184,
             "pos_x": 0,
-            "pos_y": 0,
-        },
+            "pos_y": 192,
+            "width": 64,
+            "height": 64,
+        }
+    },
+    "85/0.124/1.9": {
+        "notebook5": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 197184,
+            "pos_x": 0,
+            "pos_y": 192,
+            "width": 64,
+            "height": 64,
+        }
     },
     "108/0.133/12.9": {
         "name_entry_1": {
+            "bpp": 4,
             "height": 128,
             "palette_offset": 65664,
             "pos_x": 0,
@@ -346,6 +583,7 @@ known_textures = {
             "width": 512,
         },
         "name_entry_2": {
+            "bpp": 4,
             "height": 128,
             "palette_offset": 65696,
             "pos_x": 512,
@@ -356,6 +594,7 @@ known_textures = {
     },
     "193/7.559/25.9": {
         "continue_selected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 394304,
             "pos_x": 128,
@@ -364,6 +603,7 @@ known_textures = {
             "width": 128,
         },
         "continue_unselected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 394240,
             "pos_x": 128,
@@ -372,6 +612,7 @@ known_textures = {
             "width": 128,
         },
         "enter_selected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 410688,
             "pos_x": 128,
@@ -380,6 +621,7 @@ known_textures = {
             "width": 128,
         },
         "enter_unselected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 410624,
             "pos_x": 128,
@@ -388,6 +630,7 @@ known_textures = {
             "width": 128,
         },
         "options_selected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 410560,
             "pos_x": 128,
@@ -396,6 +639,7 @@ known_textures = {
             "width": 128,
         },
         "options_unselected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 410496,
             "pos_x": 128,
@@ -404,6 +648,7 @@ known_textures = {
             "width": 128,
         },
         "verdicts_selected": {
+            "bpp": 8,
             "height": 32,
             "name": "verdicts_selected",
             "palette_offset": 394176,
@@ -413,6 +658,7 @@ known_textures = {
             "width": 128,
         },
         "verdicts_unselected": {
+            "bpp": 8,
             "height": 32,
             "palette_offset": 394112,
             "pos_x": 128,
@@ -423,6 +669,7 @@ known_textures = {
     },
     "108/4.130": {
         "name_entry_char_0": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49664,
             "pos_x": 192,
@@ -431,6 +678,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_1": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49696,
             "pos_x": 256,
@@ -439,6 +687,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_10": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49984,
             "pos_x": 832,
@@ -447,6 +696,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_11": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50016,
             "pos_x": 896,
@@ -455,6 +705,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_12": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50048,
             "pos_x": 960,
@@ -463,6 +714,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_13": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50080,
             "pos_x": 128,
@@ -471,6 +723,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_14": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50112,
             "pos_x": 192,
@@ -479,6 +732,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_15": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50144,
             "pos_x": 256,
@@ -487,6 +741,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_16": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50176,
             "pos_x": 320,
@@ -495,6 +750,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_17": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50208,
             "pos_x": 384,
@@ -503,6 +759,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_18": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50240,
             "pos_x": 448,
@@ -511,6 +768,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_19": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 50272,
             "pos_x": 512,
@@ -519,6 +777,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_2": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49728,
             "pos_x": 320,
@@ -527,6 +786,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_20": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57472,
             "pos_x": 576,
@@ -535,6 +795,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_21": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57504,
             "pos_x": 640,
@@ -543,6 +804,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_22": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57536,
             "pos_x": 704,
@@ -551,6 +813,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_23": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57568,
             "pos_x": 768,
@@ -559,6 +822,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_24": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57600,
             "pos_x": 832,
@@ -567,6 +831,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_25": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57632,
             "pos_x": 896,
@@ -575,6 +840,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_26": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57664,
             "pos_x": 960,
@@ -583,6 +849,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_27": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57696,
             "pos_x": 0,
@@ -591,6 +858,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_28": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57728,
             "pos_x": 64,
@@ -599,6 +867,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_29": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57760,
             "pos_x": 128,
@@ -607,6 +876,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_3": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49760,
             "pos_x": 384,
@@ -615,6 +885,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_30": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57792,
             "pos_x": 192,
@@ -623,6 +894,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_31": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57824,
             "pos_x": 256,
@@ -631,6 +903,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_32": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57856,
             "pos_x": 320,
@@ -639,6 +912,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_33": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57888,
             "pos_x": 384,
@@ -647,6 +921,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_34": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57920,
             "pos_x": 448,
@@ -655,6 +930,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_35": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57952,
             "pos_x": 512,
@@ -663,6 +939,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_36": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 57984,
             "pos_x": 576,
@@ -671,6 +948,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_37": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58016,
             "pos_x": 640,
@@ -679,6 +957,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_38": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58048,
             "pos_x": 704,
@@ -687,6 +966,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_39": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58080,
             "pos_x": 768,
@@ -695,6 +975,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_4": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49792,
             "pos_x": 448,
@@ -703,6 +984,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_40": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58112,
             "pos_x": 832,
@@ -711,6 +993,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_41": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58144,
             "pos_x": 896,
@@ -719,6 +1002,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_42": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58176,
             "pos_x": 960,
@@ -727,6 +1011,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_43": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58208,
             "pos_x": 0,
@@ -735,6 +1020,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_44": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58240,
             "pos_x": 64,
@@ -743,6 +1029,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_45": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58272,
             "pos_x": 128,
@@ -751,6 +1038,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_46": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58304,
             "pos_x": 192,
@@ -759,6 +1047,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_47": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58336,
             "pos_x": 256,
@@ -767,6 +1056,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_48": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58368,
             "pos_x": 320,
@@ -775,6 +1065,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_49": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58400,
             "pos_x": 384,
@@ -783,6 +1074,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_5": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49824,
             "pos_x": 512,
@@ -791,6 +1083,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_50": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58432,
             "pos_x": 448,
@@ -799,6 +1092,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_51": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 58464,
             "pos_x": 512,
@@ -807,6 +1101,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_52": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65664,
             "pos_x": 576,
@@ -815,6 +1110,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_53": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65696,
             "pos_x": 640,
@@ -823,6 +1119,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_54": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65728,
             "pos_x": 704,
@@ -831,6 +1128,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_55": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65760,
             "pos_x": 768,
@@ -839,6 +1137,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_56": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65792,
             "pos_x": 832,
@@ -847,6 +1146,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_57": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65824,
             "pos_x": 896,
@@ -855,6 +1155,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_58": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65856,
             "pos_x": 960,
@@ -863,6 +1164,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_59": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65888,
             "pos_x": 0,
@@ -871,6 +1173,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_6": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49856,
             "pos_x": 576,
@@ -879,6 +1182,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_60": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65920,
             "pos_x": 64,
@@ -887,6 +1191,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_61": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65952,
             "pos_x": 128,
@@ -895,6 +1200,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_62": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 65984,
             "pos_x": 192,
@@ -903,6 +1209,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_63": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66016,
             "pos_x": 256,
@@ -911,6 +1218,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_64": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66048,
             "pos_x": 320,
@@ -919,6 +1227,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_65": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66080,
             "pos_x": 384,
@@ -927,6 +1236,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_66": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66112,
             "pos_x": 448,
@@ -935,6 +1245,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_67": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66144,
             "pos_x": 512,
@@ -943,6 +1254,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_68": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66176,
             "pos_x": 576,
@@ -951,6 +1263,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_69": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66208,
             "pos_x": 640,
@@ -959,6 +1272,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_7": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49888,
             "pos_x": 640,
@@ -967,6 +1281,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_70": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66240,
             "pos_x": 704,
@@ -975,6 +1290,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_71": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66272,
             "pos_x": 768,
@@ -983,6 +1299,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_72": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66304,
             "pos_x": 832,
@@ -991,6 +1308,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_73": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66336,
             "pos_x": 896,
@@ -999,6 +1317,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_74": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66368,
             "pos_x": 960,
@@ -1007,6 +1326,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_75": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66400,
             "pos_x": 0,
@@ -1015,6 +1335,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_76": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66432,
             "pos_x": 64,
@@ -1023,6 +1344,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_77": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66464,
             "pos_x": 128,
@@ -1031,6 +1353,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_78": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66496,
             "pos_x": 192,
@@ -1039,6 +1362,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_79": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66528,
             "pos_x": 256,
@@ -1047,6 +1371,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_8": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49920,
             "pos_x": 704,
@@ -1055,6 +1380,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_80": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66560,
             "pos_x": 320,
@@ -1063,6 +1389,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_81": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66592,
             "pos_x": 384,
@@ -1071,6 +1398,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_82": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66624,
             "pos_x": 448,
@@ -1079,6 +1407,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_83": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 66656,
             "pos_x": 512,
@@ -1087,6 +1416,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_84": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 73856,
             "pos_x": 576,
@@ -1095,6 +1425,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_85": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 73888,
             "pos_x": 640,
@@ -1103,6 +1434,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_86": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 73920,
             "pos_x": 704,
@@ -1111,6 +1443,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_87": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 73952,
             "pos_x": 768,
@@ -1119,6 +1452,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_88": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 73984,
             "pos_x": 832,
@@ -1127,6 +1461,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_89": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 74016,
             "pos_x": 896,
@@ -1135,6 +1470,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_9": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 49952,
             "pos_x": 768,
@@ -1143,6 +1479,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_90": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 74048,
             "pos_x": 960,
@@ -1151,6 +1488,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_91": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 74080,
             "pos_x": 0,
@@ -1159,6 +1497,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_92": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 74112,
             "pos_x": 64,
@@ -1167,6 +1506,7 @@ known_textures = {
             "width": 64,
         },
         "name_entry_char_93": {
+            "bpp": 4,
             "height": 16,
             "palette_offset": 74144,
             "pos_x": 128,

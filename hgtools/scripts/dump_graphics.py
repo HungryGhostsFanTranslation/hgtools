@@ -52,7 +52,11 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
 
     for file_path in known_textures.keys():
         full_path = os.path.join(path_to_unpacked, file_path)
-        t = Texture(filename=full_path, slices=known_textures[file_path])
+        slices = known_textures[file_path]
+        # Assume the entire file is the same bpp
+        # This may bite me later
+        bpp = list(slices.values())[0]["bpp"]
+        t = Texture(filename=full_path, slices=slices, bpp=bpp)
         t.dump_slices(output_dir)
 
     for file_path in known_fonts.keys():
