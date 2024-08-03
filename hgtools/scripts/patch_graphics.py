@@ -12,6 +12,10 @@ from hglib.fonts.font import Font
 from pathlib import Path
 import click
 
+bpp_by_slice_name = {}
+for texture in known_textures.values():
+    for slice_name, contents in texture.items():
+        bpp_by_slice_name[slice_name] = contents["bpp"]
 
 @click.command()
 @click.argument(
@@ -44,19 +48,19 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
 
         # Quantize and fliptate graphics before patching them into game files
         for filename in os.listdir(replacement_graphics_dir):
+            slice_name = filename.split(".png")[0] 
+
             in_path = os.path.join(replacement_graphics_dir, filename)
             out_path = os.path.join(tmpdir, filename)
             temp_path = os.path.join(tmpdir, "temp.png")
-            if (
-                "name_entry" in filename
-                or "weapons" in filename
-                or "equipment" in filename
-                or "usable_items" in filename
-                or "notebook" in filename
-                or "notes" in filename
-                or "recollections" in filename
-                or "accounts" in filename
-            ):
+            if "note_bg" in filename:
+                shutil.copyfile(in_path, out_path)
+                Path(temp_path).touch()
+            elif slice_name not in bpp_by_slice_name:
+                # Fonts mostly
+                shutil.copyfile(in_path, out_path)
+                Path(temp_path).touch()
+            elif bpp_by_slice_name[slice_name] == 4:
                 subprocess.run(
                     [
                         "pngquant",
@@ -69,10 +73,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                     ]
                 )
                 shutil.copy(temp_path, out_path)
-            elif "note_bg" in filename:
-                shutil.copyfile(in_path, out_path)
-                Path(temp_path).touch()
-            elif "font" not in filename:
+            elif bpp_by_slice_name[slice_name] == 8:
                 subprocess.run(
                     [
                         "pngquant",
@@ -87,9 +88,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
                 subprocess.run(
                     ["magick", temp_path, "-flop", "-rotate", "180", out_path]
                 )
-            else:
-                shutil.copyfile(in_path, out_path)
-                Path(temp_path).touch()
+
 
             os.remove(temp_path)
         for file_path in known_textures.keys():
