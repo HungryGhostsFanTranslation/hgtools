@@ -96,8 +96,8 @@ class Texture:
                 palette[(section_index * 32) + i + 24] = (r, g, b, a)
         return palette
 
-    @staticmethod
-    def read_palette_4bpp(fp, offset):
+
+    def read_palette_4bpp(self, fp, offset):
         """Read a single 4bpp palette from <fp> starting at <offset>"""
         fp.seek(offset)
         palette = [0] * 16
@@ -109,7 +109,7 @@ class Texture:
             elif a < 0:
                 a = 0
             palette[i] = (r, g, b, a)
-        fp.seek(offset + 0x400)
+        fp.seek(offset + self.width)
         for i in range(0, 8):
             r, g, b, a = fp.read(4)
             a = (a * 2) - 1
@@ -159,8 +159,8 @@ class Texture:
                 fp.write(b.to_bytes(length=1, byteorder="little"))
                 fp.write(a.to_bytes(length=1, byteorder="little"))
 
-    @staticmethod
-    def write_palette_4bpp(fp, offset, palette):
+
+    def write_palette_4bpp(self, fp, offset, palette):
         """Replace the 4bpp palette at <offset> with <palette>"""
         fp.seek(offset)
         # Pad palette out to 16 entries if needed.
@@ -173,7 +173,7 @@ class Texture:
             fp.write(g.to_bytes(length=1, byteorder="little"))
             fp.write(b.to_bytes(length=1, byteorder="little"))
             fp.write(a.to_bytes(length=1, byteorder="little"))
-        fp.seek(offset + 0x400)
+        fp.seek(offset + self.width)
         for i in range(0, 8):
             r, g, b, a = palette[i + 8]
             a = math.ceil(a / 2)
@@ -224,14 +224,15 @@ class Texture:
         with open(self.filename, "rb") as f:
             self.header = f.read(0x80)
 
-            self.read_slice_palettes(f)
-
             f.seek(0x50)
             if self.bpp == 4:
                 self.width = int.from_bytes(f.read(4), byteorder="little") * 4
             elif self.bpp == 8:
                 self.width = int.from_bytes(f.read(4), byteorder="little") * 2
             self.height = int.from_bytes(f.read(4), byteorder="little") * 2
+
+            self.read_slice_palettes(f)
+
             f.seek(0x80)
             if self.bpp == 8:
                 self.swizzle_map, self.deswizzle_map = get_maps_8bpp(

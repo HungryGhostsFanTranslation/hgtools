@@ -53,7 +53,7 @@ def patch_graphics(replacement_graphics_dir: str, path_to_unpacked: str):
             in_path = os.path.join(replacement_graphics_dir, filename)
             out_path = os.path.join(tmpdir, filename)
             temp_path = os.path.join(tmpdir, "temp.png")
-            if "note_bg" in filename:
+            if "note_bg" in filename or "inv_" in filename:
                 shutil.copyfile(in_path, out_path)
                 Path(temp_path).touch()
             elif slice_name not in bpp_by_slice_name:

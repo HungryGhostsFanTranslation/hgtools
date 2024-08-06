@@ -324,6 +324,17 @@ default_palette_8bpp = [
 ]
 
 known_textures = {
+    "108/5.131": {
+        "contract": {
+            "bpp": 4,
+            "pos_x": 0,
+            "pos_y": 0,
+            "palette_offset": 800,
+            "scrambled": True,
+            "width": 256,
+            "height": 64,
+        }
+    },
     "118/0.147": {
         "note_bg1": {
             "bpp": 4,
