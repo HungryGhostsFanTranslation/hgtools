@@ -1031,6 +1031,15 @@ known_textures = {
             "width": 128,
             "height": 64,
         },
+        "weapon_item2": {
+            "bpp": 4,
+            "scrambled": True,
+            "palette_offset": 189472,
+            "pos_x": 512,
+            "pos_y": 0,
+            "width": 256,
+            "height": 64,
+        },
         "notebook5": {
             "bpp": 4,
             "scrambled": True,
