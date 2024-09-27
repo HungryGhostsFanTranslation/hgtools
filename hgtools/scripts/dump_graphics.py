@@ -2,6 +2,9 @@
 
 import os
 import shutil
+import sys
+import tempfile
+from glob import glob
 from hglib.textures.known_textures import known_textures
 from hglib.fonts.known_fonts import known_fonts
 from hglib.textures.texture import Texture
@@ -31,6 +34,12 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
     """
     Given an directory of unpacked game files, dump out known textures to <output_dir>
     """
+
+    if not shutil.which("magick"):
+        sys.exit(
+            "ImageMagick not found. This is a requirement for this script. Install it first"
+        )
+
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
@@ -50,14 +59,17 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
 
-    for file_path in known_textures.keys():
-        full_path = os.path.join(path_to_unpacked, file_path)
-        slices = known_textures[file_path]
-        # Assume the entire file is the same bpp
-        # This may bite me later
-        bpp = list(slices.values())[0]["bpp"]
-        t = Texture(filename=full_path, slices=slices, bpp=bpp)
-        t.dump_slices(output_dir)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for file_path in known_textures.keys():
+            full_path = os.path.join(path_to_unpacked, file_path)
+            slices = known_textures[file_path]["slices"]
+            dir_name = known_textures[file_path]["dir_name"]
+            # Assume the entire file is the same bpp
+            # This may bite me later
+            bpp = list(slices.values())[0]["bpp"]
+            t = Texture(filename=full_path, slices=slices, bpp=bpp)
+            t.dump_slices(os.path.join(tmpdir, dir_name))
+        shutil.copytree(os.path.join(tmpdir), output_dir, dirs_exist_ok=True)
 
     for file_path in known_fonts.keys():
         full_path = os.path.join(path_to_unpacked, file_path)
