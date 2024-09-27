@@ -18,6 +18,8 @@ from defusedxml.ElementTree import ParseError, parse
 from hglib.char_pixel_widths import char_pixel_widths
 from hglib.orig_hgscript_filesizes import orig_hgscript_filesizes
 
+class EncodingException(Exception):
+    pass
 
 def is_ascii(c):
     c_as_int = ord(c)
@@ -259,7 +261,10 @@ class HGScript:
                     event.text = event.text.replace("…", "$").replace("...", "$")
                     # Similarly, we swapped "%" for emdash
                     event.text = event.text.replace("—", "%").replace("–", "%")
-                    encoded_text = event.text.encode("shift-jis")
+                    try:
+                        encoded_text = event.text.encode("shift-jis")
+                    except UnicodeEncodeError as unicode_e:
+                        raise EncodingException(f'Could not encode event with text "{event.text}"') from unicode_e
 
                     width = calculate_text_width(event.text)
 

@@ -2,8 +2,11 @@
 
 import os
 import sys
-from hglib.hgscript import HGScriptCollection
+import traceback
+
 import click
+
+from hglib.hgscript import HGScriptCollection
 
 
 @click.command()
@@ -35,6 +38,10 @@ def compile_hgscript(input_dir: str, path_to_unpacked: str):
         original_path = os.path.join(path_to_unpacked, dir.replace("_", "/"))
         if not os.path.isfile(original_path):
             sys.exit(f"Could not find file {original_path}")
-        coll = HGScriptCollection.from_dir(os.path.join(input_dir, dir))
-        coll.to_file(original_path)
+        try:
+            coll = HGScriptCollection.from_dir(os.path.join(input_dir, dir))
+            coll.to_file(original_path)
+        except Exception as e:
+            traceback.print_exception(e)
+            sys.exit(f"Failed to compile hgscript from file: {input_dir}")
     print("Done")

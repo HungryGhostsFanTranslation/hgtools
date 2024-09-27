@@ -98,7 +98,7 @@ class Font:
         )
 
         filename = f"{output_dir}/{self.title}.png"
-        print(f"Dumping to {filename}")
+        print(f"Dumping font {self.title}.png")
         with open(filename, "wb") as image_f:
             w.write(image_f, tile_pixels)
     @staticmethod
