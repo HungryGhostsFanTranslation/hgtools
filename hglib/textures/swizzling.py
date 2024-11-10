@@ -1,5 +1,13 @@
 import math
+from os import makedirs
+from os.path import isdir, join, expanduser
 
+from diskcache import Cache
+home_dir = expanduser("~")
+cache_dir = join(home_dir, ".local", "share", "hgtools")
+cache = Cache(cache_dir)
+
+        
 
 def unswizzle_8bpp(x, y):
     x0 = x & 0x80
@@ -50,6 +58,8 @@ def unswizzle_4bpp(x, y):
 
 
 def get_maps_8bpp(img_width, img_height):
+    if f"{img_width}||{img_height}" in cache:
+        return cache[f"{img_width}||{img_height}"]
     swizzle_map = [[(None, None) for _ in range(img_width)] for _ in range(img_height)]
     deswizzle_map = [
         [(None, None) for _ in range(int(img_width * 2))]
@@ -60,11 +70,14 @@ def get_maps_8bpp(img_width, img_height):
             unswizzled_x, unswizzled_y = unswizzle_8bpp(x, y)
             deswizzle_map[y][x] = (unswizzled_x, unswizzled_y)
             swizzle_map[unswizzled_y][unswizzled_x] = (x, y)
+
+    cache[f"{img_width}||{img_height}"] = (swizzle_map, deswizzle_map)
     return (swizzle_map, deswizzle_map)
 
 
 def get_maps_4bpp(img_width, img_height):
-
+    if f"{img_width}||{img_height}" in cache:
+        return cache[f"{img_width}||{img_height}"]
     swizzle_map = [[(None, None) for _ in range(img_width)] for _ in range(img_height*8)]
     deswizzle_map = [
         [(None, None) for _ in range(int(img_width * 2))]
@@ -75,6 +88,7 @@ def get_maps_4bpp(img_width, img_height):
             unswizzled_x, unswizzled_y = unswizzle_4bpp(x, y)
             deswizzle_map[y][x] = (unswizzled_x, unswizzled_y)
             swizzle_map[unswizzled_y][unswizzled_x] = (x, y)
+    cache[f"{img_width}||{img_height}"] = (swizzle_map, deswizzle_map)
     return (swizzle_map, deswizzle_map)
 
 
