@@ -29,7 +29,7 @@ class Texture:
         self.deswizzle_map = None
         self.read()
 
-    def update_slices(self, real_x: int, real_y: int, pixel_value: int):
+    def update_slices(self, pixels):
         """
         If the given pixel is a part of a defined slice, update that slice's pixel data
         """
@@ -45,19 +45,8 @@ class Texture:
                 height = slice.get("height")
                 pos_x = slice["pos_x"]
                 pos_y = slice["pos_y"]
-            
-            if not whole_sheet and not (
-                real_x >= pos_x
-                and real_x < (pos_x + width)
-                and real_y >= pos_y
-                and real_y < (pos_y + height)
-            ):
-                continue
 
-            # If we're here, this pixel is part of a slice
-            item_x = real_x - pos_x
-            item_y = real_y - pos_y
-            if not "pixels" in slice:
+            if "pixels" not in slice:
                 if whole_sheet:
                     if self.bpp == 8:
                         slice["pixels"] = [
@@ -65,17 +54,15 @@ class Texture:
                         ]
                     else:
                         slice["pixels"] = [
-                            [0 for _ in range(self.width // 2)] for _ in range((self.height * 4))
+                            [0 for _ in range(self.width // 2)]
+                            for _ in range((self.height * 4))
                         ]
                 else:
                     slice["pixels"] = [[0 for _ in range(width)] for _ in range(height)]
-            try:
-                slice["pixels"][item_y][item_x] = pixel_value
-            except IndexError:
-                if not whole_sheet:
-                    raise
-                
-            return
+
+            for item_y, row in enumerate(pixels[pos_y : pos_y + height]):
+                for item_x, pixel in enumerate(row[pos_x : pos_x + width]):
+                    slice["pixels"][item_y][item_x] = pixel
 
     @staticmethod
     def read_palette_8bpp(fp, offset):
@@ -259,22 +246,47 @@ class Texture:
                 self.swizzle_map, self.deswizzle_map = get_maps_8bpp(
                     img_width=self.width, img_height=self.height
                 )
-                for y in range(0, int(self.height / 2)):
-                    for x in range(0, int(self.width * 2)):
-                        pixel = int.from_bytes(f.read(1), "little")
-                        real_x, real_y = unswizzle(x, y, self.deswizzle_map)
-                        self.update_slices(real_x, real_y, pixel_value=pixel)
+                pixels = [[0 for _ in range(self.width)] for _ in range(self.height)]
+
+                buf = f.read(self.width * self.height)
+                for i, pixel in enumerate(buf):
+                    y = i // (self.width * 2)
+                    x = i % (self.width * 2)
+                    real_x, real_y = unswizzle(x, y, self.deswizzle_map)
+
+                    # In my testing these pixels are always 0 or palettes, so I
+                    # guess I don't care. Not sure if it's an artifact of swizzling
+                    # or a legit bug.
+                    if (real_x >= self.width) or (real_y >= self.height):
+                        continue
+                    pixels[real_y][real_x] = pixel
+
+                self.update_slices(pixels)
             elif self.bpp == 4:
                 self.swizzle_map, self.deswizzle_map = get_maps_4bpp(
                     img_width=self.width, img_height=self.height
                 )
-                for y in range(0, int(self.height)):
-                    for x in range(0, int(self.width * 2), 2):
-                        two_pixels = int.from_bytes(f.read(1), "little")
+                pixels = [
+                    [0 for _ in range(self.width // 2)]
+                    for _ in range((self.height * 4))
+                ]
+                buf = f.read(self.width * self.height)
+                for i, two_pixels in enumerate(buf):
+                    y = i // self.width
+                    x = (i % self.width) * 2
 
-                        for i, pixel in enumerate([two_pixels >> 4, two_pixels & 0x0F]):
-                            real_x, real_y = unswizzle(x + i, y, self.deswizzle_map)
-                            self.update_slices(real_x, real_y, pixel_value=pixel)
+                    for subpixel_index, pixel in enumerate(
+                        [two_pixels >> 4, two_pixels & 0x0F]
+                    ):
+                        real_x, real_y = unswizzle(
+                            x + subpixel_index, y, self.deswizzle_map
+                        )
+
+                        if (real_x >= self.width // 2) or (real_y >= self.height * 4):
+                            continue
+                        pixels[real_y][real_x] = pixel
+
+                self.update_slices(pixels)
 
     def dump_slices(self, output_dir: str):
         """
@@ -298,7 +310,6 @@ class Texture:
             )
             with open(filename, "wb") as image_f:
                 w.write(image_f, pixel_data)
-
 
     @staticmethod
     def infer_palette(png_filename: str):
@@ -385,7 +396,6 @@ class Texture:
 
             for y, row in enumerate(rows):
                 for x in range(0, width):
-
                     # Translate a pixel from our replacement PNG to a value
                     # in <inferred_palette>.
                     if png_palette:
@@ -448,7 +458,6 @@ class Texture:
 
             for y, row in enumerate(pixel_data):
                 for x in range(0, len(row)):
-
                     # Find the proper swizzled address of the pixel and then write it
                     swizzled_x, swizzled_y = swizzle(
                         pos_x + x, pos_y + y, swizzle_map=self.swizzle_map
