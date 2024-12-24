@@ -4,7 +4,7 @@ from os.path import isdir, join, expanduser
 
 from diskcache import Cache
 home_dir = expanduser("~")
-cache_dir = join(home_dir, ".local", "share", "hgtools")
+cache_dir = join(home_dir, ".local", "share", "hgtools", "swizzling")
 cache = Cache(cache_dir)
 
         

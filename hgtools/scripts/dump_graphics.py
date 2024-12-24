@@ -4,13 +4,37 @@ import os
 import shutil
 import sys
 import tempfile
-from glob import glob
-from hglib.textures.known_textures import known_textures
-from hglib.fonts.known_fonts import known_fonts
-from hglib.textures.texture import Texture
-from hglib.fonts.font import Font
+from os.path import expanduser, join, isdir, isfile
+from importlib.metadata import version
+
 import click
 
+from hglib.fonts.font import Font
+from hglib.fonts.known_fonts import known_fonts
+from hglib.textures.known_textures import known_textures
+from hglib.textures.texture import Texture
+
+home_dir = expanduser("~")
+cache_dir = join(home_dir, ".local", "share", "hgtools", "graphics_dump")
+
+def is_cached():
+    if not isdir(cache_dir) or not isfile(join(cache_dir, "meta.txt")):
+        return False
+    
+    with open(join(cache_dir, "meta.txt"), "r") as meta_f:
+        cache_version = meta_f.read()
+    
+    return cache_version == version("hgtools")
+
+def from_cache(output_dir: str):
+    shutil.copytree(cache_dir, output_dir, ignore=shutil.ignore_patterns("*.txt"), dirs_exist_ok=True)
+    
+def to_cache(output_dir: str):
+    if isdir(cache_dir):
+        shutil.rmtree(cache_dir)
+    shutil.copytree(output_dir, cache_dir)
+    with open(join(cache_dir, "meta.txt"), "w") as meta_f:
+        meta_f.write(version("hgtools"))
 
 @click.command()
 @click.argument(
@@ -59,6 +83,11 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
         elif os.path.isdir(file_path):
             shutil.rmtree(file_path)
 
+    if is_cached():
+        print("Restoring dumped graphics from cache")
+        from_cache(output_dir=output_dir)
+        return
+
     with tempfile.TemporaryDirectory() as tmpdir:
         for file_path in known_textures.keys():
             full_path = os.path.join(path_to_unpacked, file_path)
@@ -81,3 +110,5 @@ def dump_graphics(path_to_unpacked: str, output_dir: str, force: bool):
         font = Font(filename=full_path, title=title, width=width, height=height, interleaved=interleaved)
 
         font.dump(output_dir)
+
+    to_cache(output_dir=output_dir)
