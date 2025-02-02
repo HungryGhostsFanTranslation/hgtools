@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hgtools',
-    version='1.4.4',
+    version='1.4.5',
     packages=find_packages(),
     py_modules=['hgtools'],
     install_requires=[

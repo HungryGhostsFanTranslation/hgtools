@@ -1251,6 +1251,147 @@ known_textures = {
             },
         },
     },
+    "86/0.124/5.9": {
+        "dir_name": "mirror",
+        "slices": {
+            "curses":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197504,
+                "pos_x": 0,
+                "pos_y": 672,
+                "width": 128,
+                "height": 32
+            },
+            "want":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197536,
+                "pos_x": 0,
+                "pos_y": 704,
+                "width": 128,
+                "height": 32
+            },
+            "possessions":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197568,
+                "pos_x": 0,
+                "pos_y": 736,
+                "width": 128,
+                "height": 32
+            },
+            
+        }
+    },
+    "87/0.124/5.9": {
+        "dir_name": "mirror",
+        "slices": {
+            "curses2":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197504,
+                "pos_x": 0,
+                "pos_y": 672,
+                "width": 128,
+                "height": 32
+            },
+            "want2":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197536,
+                "pos_x": 0,
+                "pos_y": 704,
+                "width": 128,
+                "height": 32
+            },
+            "possessions2":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197568,
+                "pos_x": 0,
+                "pos_y": 736,
+                "width": 128,
+                "height": 32
+            }
+        }
+    },
+    "91/0.124/5.9": {
+        "dir_name": "mirror",
+        "slices": {
+            "curses3":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197504,
+                "pos_x": 0,
+                "pos_y": 672,
+                "width": 128,
+                "height": 32
+            },
+            "want3":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197536,
+                "pos_x": 0,
+                "pos_y": 704,
+                "width": 128,
+                "height": 32
+            },
+            "possessions3":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197568,
+                "pos_x": 0,
+                "pos_y": 736,
+                "width": 128,
+                "height": 32
+            }
+        }
+    },
+    "92/0.124/5.9": {
+        "dir_name": "mirror",
+        "slices": {
+            "curses4":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197504,
+                "pos_x": 0,
+                "pos_y": 672,
+                "width": 128,
+                "height": 32
+            },
+            "want4":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197536,
+                "pos_x": 0,
+                "pos_y": 704,
+                "width": 128,
+                "height": 32
+            },
+            "possessions4":
+            {
+                "bpp": 4,
+                "scrambled": False,
+                "palette_offset": 197568,
+                "pos_x": 0,
+                "pos_y": 736,
+                "width": 128,
+                "height": 32
+            }
+        }
+    },
     "85/0.124/1.9": {
         "dir_name": "top_menu",
         "slices": {
