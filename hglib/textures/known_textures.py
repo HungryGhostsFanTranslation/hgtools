@@ -874,7 +874,7 @@ known_textures = {
             "accounts": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 82784,
+                "palette_offset": 82752,
                 "pos_x": 128,
                 "pos_y": 128,
                 "width": 128,
@@ -883,7 +883,7 @@ known_textures = {
             "recollections": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 82816,
+                "palette_offset": 82784,
                 "pos_x": 128,
                 "pos_y": 160,
                 "width": 128,
@@ -892,7 +892,7 @@ known_textures = {
             "notes": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 82752,
+                "palette_offset": 82816,
                 "pos_x": 128,
                 "pos_y": 192,
                 "width": 128,
