@@ -938,7 +938,7 @@ known_textures = {
             "accounts3": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 49504,
+                "palette_offset": 49472,
                 "pos_x": 128,
                 "pos_y": 128,
                 "width": 128,
@@ -947,7 +947,7 @@ known_textures = {
             "recollections3": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 49728,
+                "palette_offset": 49504,
                 "pos_x": 128,
                 "pos_y": 160,
                 "width": 128,
@@ -956,7 +956,7 @@ known_textures = {
             "notes3": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 49472,
+                "palette_offset": 49728,
                 "pos_x": 128,
                 "pos_y": 192,
                 "width": 128,
@@ -1002,7 +1002,7 @@ known_textures = {
             "accounts5": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 50208,
+                "palette_offset": 50176,
                 "pos_x": 128,
                 "pos_y": 128,
                 "width": 128,
@@ -1011,7 +1011,7 @@ known_textures = {
             "recollections5": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 50240,
+                "palette_offset": 50208,
                 "pos_x": 128,
                 "pos_y": 160,
                 "width": 128,
@@ -1020,7 +1020,7 @@ known_textures = {
             "notes5": {
                 "bpp": 4,
                 "scrambled": False,
-                "palette_offset": 50176,
+                "palette_offset": 50240,
                 "pos_x": 128,
                 "pos_y": 192,
                 "width": 128,
