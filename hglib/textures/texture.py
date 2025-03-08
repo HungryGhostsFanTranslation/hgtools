@@ -37,7 +37,10 @@ class Texture:
             whole_sheet = slice.get("whole_sheet", False)
             if whole_sheet:
                 width = self.width
-                height = self.height
+                if self.bpp == 4:
+                    height = self.height * 4
+                else:
+                    height = self.height
                 pos_x = 0
                 pos_y = 0
             else:
@@ -271,6 +274,7 @@ class Texture:
                     for _ in range((self.height * 4))
                 ]
                 buf = f.read(self.width * self.height)
+
                 for i, two_pixels in enumerate(buf):
                     y = i // self.width
                     x = (i % self.width) * 2
@@ -284,6 +288,7 @@ class Texture:
 
                         if (real_x >= self.width // 2) or (real_y >= self.height * 4):
                             continue
+
                         pixels[real_y][real_x] = pixel
 
                 self.update_slices(pixels)
